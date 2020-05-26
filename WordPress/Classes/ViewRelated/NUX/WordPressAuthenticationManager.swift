@@ -40,72 +40,35 @@ class WordPressAuthenticationManager: NSObject {
                                                                 enableUnifiedAuth: FeatureFlag.unifiedAuth.enabled,
                                                                 enableUnifiedSiteAddress: FeatureFlag.unifiedSiteAddress.enabled)
 
-        let style = FeatureFlag.unifiedSiteAddress.enabled ? createStyle() : createOldStyle()
+        let style = WordPressAuthenticatorStyle(primaryNormalBackgroundColor: .primaryButtonBackground,
+                                                primaryNormalBorderColor: nil,
+                                                primaryHighlightBackgroundColor: .primaryButtonDownBackground,
+                                                primaryHighlightBorderColor: nil,
+                                                secondaryNormalBackgroundColor: .authSecondaryButtonBackground,
+                                                secondaryNormalBorderColor: .secondaryButtonBorder,
+                                                secondaryHighlightBackgroundColor: .secondaryButtonDownBackground,
+                                                secondaryHighlightBorderColor: .secondaryButtonDownBorder,
+                                                disabledBackgroundColor: .textInverted,
+                                                disabledBorderColor: .neutral(.shade10),
+                                                primaryTitleColor: .white,
+                                                secondaryTitleColor: .text,
+                                                disabledTitleColor: .neutral(.shade20),
+                                                textButtonColor: .primary,
+                                                textButtonHighlightColor: .primaryDark,
+                                                instructionColor: .text,
+                                                subheadlineColor: .textSubtle,
+                                                placeholderColor: .textPlaceholder,
+                                                viewControllerBackgroundColor: .listBackground,
+                                                textFieldBackgroundColor: .listForeground,
+                                                buttonViewBackgroundColor: .authButtonViewBackground,
+                                                navBarImage: .gridicon(.mySites),
+                                                navBarBadgeColor: .accent(.shade20),
+                                                prologueBackgroundColor: .primary,
+                                                prologueTitleColor: .textInverted,
+                                                statusBarStyle: .lightContent)
 
         WordPressAuthenticator.initialize(configuration: configuration,
                                           style: style)
-    }
-
-    /// Generates the old authenticator styles.
-    ///
-    func createOldStyle() -> WordPressAuthenticatorStyle {
-        return WordPressAuthenticatorStyle(primaryNormalBackgroundColor: .primaryButtonBackground,
-            primaryNormalBorderColor: nil,
-            primaryHighlightBackgroundColor: .primaryButtonDownBackground,
-            primaryHighlightBorderColor: nil,
-            secondaryNormalBackgroundColor: .authSecondaryButtonBackground,
-            secondaryNormalBorderColor: .secondaryButtonBorder,
-            secondaryHighlightBackgroundColor: .secondaryButtonDownBackground,
-            secondaryHighlightBorderColor: .secondaryButtonDownBorder,
-            disabledBackgroundColor: .textInverted,
-            disabledBorderColor: .neutral(.shade10),
-            primaryTitleColor: .white,
-            secondaryTitleColor: .text,
-            disabledTitleColor: .neutral(.shade20),
-            textButtonColor: .primary,
-            textButtonHighlightColor: .primaryDark,
-            instructionColor: .text,
-            subheadlineColor: .textSubtle,
-            placeholderColor: .textPlaceholder,
-            viewControllerBackgroundColor: .listBackground,
-            textFieldBackgroundColor: .listForeground,
-            buttonViewBackgroundColor: .authButtonViewBackground,
-            navBarImage: .gridicon(.mySites),
-            navBarBadgeColor: .accent(.shade20),
-            prologueBackgroundColor: .primary,
-            prologueTitleColor: .textInverted,
-            statusBarStyle: .lightContent)
-    }
-
-    /// Generates the new unified authenticator styles.
-    ///
-    func createStyle() -> WordPressAuthenticatorStyle {
-        return WordPressAuthenticatorStyle(primaryNormalBackgroundColor: .primaryButtonBackground,
-            primaryNormalBorderColor: nil,
-            primaryHighlightBackgroundColor: .primaryButtonDownBackground,
-            primaryHighlightBorderColor: nil,
-            secondaryNormalBackgroundColor: .authSecondaryButtonBackground,
-            secondaryNormalBorderColor: .secondaryButtonBorder,
-            secondaryHighlightBackgroundColor: .secondaryButtonDownBackground,
-            secondaryHighlightBorderColor: .secondaryButtonDownBorder,
-            disabledBackgroundColor: .textInverted,
-            disabledBorderColor: .neutral(.shade10),
-            primaryTitleColor: .white,
-            secondaryTitleColor: .text,
-            disabledTitleColor: .neutral(.shade20),
-            textButtonColor: .primary,
-            textButtonHighlightColor: .primaryDark,
-            instructionColor: .text,
-            subheadlineColor: .textSubtle,
-            placeholderColor: .textPlaceholder,
-            viewControllerBackgroundColor: .listBackground,
-            textFieldBackgroundColor: .listForeground,
-            buttonViewBackgroundColor: .authButtonViewBackground,
-            navBarImage: .gridicon(.mySites),
-            navBarBadgeColor: .accent(.shade20),
-            prologueBackgroundColor: .primary,
-            prologueTitleColor: .textInverted,
-            statusBarStyle: .lightContent)
     }
 }
 
