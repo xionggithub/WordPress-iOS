@@ -315,6 +315,21 @@ extension WordPressAuthenticationManager: WordPressAuthenticatorDelegate {
     func track(event: WPAnalyticsStat, error: Error) {
         WPAppAnalytics.track(event, error: error)
     }
+
+    // MARK: - Unified Login & Signup delegate
+
+    /// Indicates if large page titles are displayed or not.
+    ///
+    var largeTitlesEnabled: Bool {
+        return true
+    }
+
+    /// Indicates if hint buttons are displayed or not.
+    /// - note: example "Find your site address" or "Reset your password"
+    ///
+    var hintButtonsEnabled: Bool {
+        return true
+    }
 }
 
 
