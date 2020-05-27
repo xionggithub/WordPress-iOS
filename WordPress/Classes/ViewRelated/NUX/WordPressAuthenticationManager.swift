@@ -330,6 +330,12 @@ extension WordPressAuthenticationManager: WordPressAuthenticatorDelegate {
     var hintButtonsEnabled: Bool {
         return true
     }
+
+    /// Indicates if the Host App wants the error labels to display or not.
+    ///
+    var errorLabelsEnabled: Bool {
+        return true
+    }
 }
 
 
