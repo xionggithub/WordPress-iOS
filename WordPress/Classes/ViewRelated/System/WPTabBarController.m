@@ -185,8 +185,14 @@ static CGFloat const WPTabBarIconSize = 32.0f;
         return _mySiteNavigationController;
     }
 
-    self.blogListViewController = [[BlogListViewController alloc] initWithMeScenePresenter:self.meScenePresenter];
-    _mySiteNavigationController = [[UINavigationController alloc] initWithRootViewController:self.blogListViewController];
+    if ([Feature enabled:FeatureFlagMySiteHierarchy]) {
+        self.mySiteViewController = [[MySiteViewController alloc] initWithMeScenePresenter:self.meScenePresenter];
+        _mySiteNavigationController = [[UINavigationController alloc] initWithRootViewController:self.mySiteViewController];
+    } else {
+        self.blogListViewController = [[BlogListViewController alloc] initWithMeScenePresenter:self.meScenePresenter];
+        _mySiteNavigationController = [[UINavigationController alloc] initWithRootViewController:self.blogListViewController];
+    }
+
     _mySiteNavigationController.navigationBar.translucent = NO;
 
     UIImage *mySitesTabBarImage = [UIImage imageNamed:@"icon-tab-mysites"];
@@ -201,7 +207,11 @@ static CGFloat const WPTabBarIconSize = 32.0f;
     BlogService *blogService = [[BlogService alloc] initWithManagedObjectContext:context];
     Blog *blogToOpen = [blogService lastUsedOrFirstBlog];
     if (blogToOpen) {
-        _blogListViewController.selectedBlog = blogToOpen;
+        if ([Feature enabled:FeatureFlagMySiteHierarchy]) {
+            _mySiteViewController.blog = blogToOpen;
+        } else {
+            _blogListViewController.selectedBlog = blogToOpen;
+        }
     }
     
     return _mySiteNavigationController;
@@ -451,8 +461,7 @@ static CGFloat const WPTabBarIconSize = 32.0f;
 - (MySitesCoordinator *)mySitesCoordinator
 {
     return [[MySitesCoordinator alloc] initWithMySiteSplitViewController:self.mySiteSplitViewController
-                                              mySiteNavigationController:self.mySiteNavigationController
-                                                   blogListViewController:self.blogListViewController];
+                                              mySiteNavigationController:self.mySiteNavigationController];
 }
 
 - (ReaderCoordinator *)readerCoordinator
@@ -648,9 +657,9 @@ static CGFloat const WPTabBarIconSize = 32.0f;
 
     [self switchMySiteTabToBlogDetailsForBlog:post.blog];
 
-    MySiteViewController *blogDetailVC = (MySiteViewController *)self.mySiteNavigationController.topViewController;
-    if ([blogDetailVC isKindOfClass:[MySiteViewController class]]) {
-        [blogDetailVC showDetailViewForSubsection:BlogDetailsSubsectionPosts];
+    MySiteViewController *mySiteVC = (MySiteViewController *)self.mySiteNavigationController.topViewController;
+    if ([mySiteVC isKindOfClass:[MySiteViewController class]]) {
+        [mySiteVC showDetailViewForSubsection:BlogDetailsSubsectionPosts];
     }
 }
 
@@ -668,9 +677,9 @@ static CGFloat const WPTabBarIconSize = 32.0f;
 
     [self switchMySiteTabToBlogDetailsForBlog:post.blog];
 
-    MySiteViewController *blogDetailVC = (MySiteViewController *)self.mySiteNavigationController.topViewController;
-    if ([blogDetailVC isKindOfClass:[MySiteViewController class]]) {
-        [blogDetailVC showDetailViewForSubsection:BlogDetailsSubsectionPages];
+    MySiteViewController *mySiteVC = (MySiteViewController *)self.mySiteNavigationController.topViewController;
+    if ([mySiteVC isKindOfClass:[MySiteViewController class]]) {
+        [mySiteVC showDetailViewForSubsection:BlogDetailsSubsectionPages];
     }
 }
 
@@ -736,9 +745,13 @@ static CGFloat const WPTabBarIconSize = 32.0f;
 {
     [self showTabForIndex:WPTabMySites];
 
-    BlogListViewController *blogListVC = self.blogListViewController;
-    self.mySiteNavigationController.viewControllers = @[blogListVC];
-    [blogListVC setSelectedBlog:blog animated:NO];
+    if ([Feature enabled:FeatureFlagMySiteHierarchy]) {
+        self.mySiteNavigationController.viewControllers = @[self.mySiteViewController];
+        self.mySiteViewController.blog = blog;
+    } else {
+        self.mySiteNavigationController.viewControllers = @[self.blogListViewController];
+        [self.blogListViewController setSelectedBlog:blog animated:NO];
+    }
 }
 
 - (void)switchNotificationsTabToNotificationSettings
@@ -795,10 +808,14 @@ static CGFloat const WPTabBarIconSize = 32.0f;
         return nil;
     }
 
-    MySiteViewController *blogDetailsController = (MySiteViewController *)[[self.mySiteNavigationController.viewControllers wp_filter:^BOOL(id obj) {
-        return [obj isKindOfClass:[MySiteViewController class]];
-    }] firstObject];
-    return blogDetailsController.blog;
+    if ([Feature enabled:FeatureFlagMySiteHierarchy]) {
+        return self.mySiteViewController.blog;
+    } else {
+        MySiteViewController *mySiteViewController = (MySiteViewController *)[[self.mySiteNavigationController.viewControllers wp_filter:^BOOL(id obj) {
+            return [obj isKindOfClass:[MySiteViewController class]];
+        }] firstObject];
+        return mySiteViewController.blog;
+    }
 }
 
 - (Blog *)currentOrLastBlog
@@ -866,6 +883,10 @@ static CGFloat const WPTabBarIconSize = 32.0f;
 
 - (void)bypassBlogListViewControllerIfNecessary
 {
+    if ([Feature enabled:FeatureFlagMySiteHierarchy]) {
+        return;
+    }
+
     // If the user has one blog then we don't want to present them with the main "My Sites"
     // screen where they can see all their blogs. In the case of only one blog just show
     // the main blog details screen

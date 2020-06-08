@@ -14,6 +14,7 @@ enum FeatureFlag: Int, CaseIterable {
     case readerWebview
     case swiftCoreData
     case homepageSettings
+    case mySiteHierarchy
 
     /// Returns a boolean indicating if the feature is enabled
     var enabled: Bool {
@@ -45,6 +46,8 @@ enum FeatureFlag: Int, CaseIterable {
         case .swiftCoreData:
             return BuildConfiguration.current == .localDeveloper
         case .homepageSettings:
+            return true
+        case .mySiteHierarchy:
             return true
         }
     }
@@ -88,6 +91,8 @@ extension FeatureFlag: OverrideableFlag {
             return "Migrate Core Data Stack to Swift"
         case .homepageSettings:
             return "Homepage Settings"
+        case .mySiteHierarchy:
+            return "My Site Hierarchy Update"
         }
     }
 
@@ -100,6 +105,8 @@ extension FeatureFlag: OverrideableFlag {
         case .newReaderNavigation:
             return false
         case .swiftCoreData:
+            return false
+        case .mySiteHierarchy:
             return false
         default:
             return true

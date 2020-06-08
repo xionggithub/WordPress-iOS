@@ -4,15 +4,12 @@ import UIKit
 class MySitesCoordinator: NSObject {
     let mySiteSplitViewController: WPSplitViewController
     let mySiteNavigationController: UINavigationController
-    let blogListViewController: BlogListViewController
 
     @objc
     init(mySiteSplitViewController: WPSplitViewController,
-         mySiteNavigationController: UINavigationController,
-         blogListViewController: BlogListViewController) {
+         mySiteNavigationController: UINavigationController) {
         self.mySiteSplitViewController = mySiteSplitViewController
         self.mySiteNavigationController = mySiteNavigationController
-        self.blogListViewController = blogListViewController
 
         super.init()
     }
@@ -20,21 +17,44 @@ class MySitesCoordinator: NSObject {
     private func prepareToNavigate() {
         WPTabBarController.sharedInstance().showMySiteTab()
 
-        mySiteNavigationController.viewControllers = [blogListViewController]
+        if let firstController = mySiteNavigationController.viewControllers.first {
+            mySiteNavigationController.viewControllers = [firstController]
+        }
     }
 
     func showMySites() {
         prepareToNavigate()
     }
 
+    @objc(showDetailsForBlog:)
+    func showBlogDetails(for blog: Blog) {
+        showBlogDetails(for: blog, then: nil)
+    }
+
     func showBlogDetails(for blog: Blog, then subsection: BlogDetailsSubsection? = nil) {
         prepareToNavigate()
 
-        blogListViewController.setSelectedBlog(blog, animated: false)
+        if FeatureFlag.mySiteHierarchy.enabled {
+            guard let mySiteViewController = mySiteNavigationController.viewControllers.first as? MySiteViewController else {
+                return
+            }
 
-        if let subsection = subsection,
-            let mySiteViewController = mySiteNavigationController.topViewController as? MySiteViewController {
-            mySiteViewController.showDetailView(for: subsection)
+            mySiteViewController.blog = blog
+
+            if let subsection = subsection {
+                mySiteViewController.showDetailView(for: subsection)
+            }
+        } else {
+            guard let blogListViewController = mySiteNavigationController.viewControllers.first as? BlogListViewController else {
+                return
+            }
+
+            blogListViewController.setSelectedBlog(blog, animated: false)
+
+            if let subsection = subsection,
+                let mySiteViewController = mySiteNavigationController.topViewController as? MySiteViewController {
+                mySiteViewController.showDetailView(for: subsection)
+            }
         }
     }
 
