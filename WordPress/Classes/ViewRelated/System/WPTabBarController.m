@@ -18,12 +18,12 @@
 
 static NSString * const WPTabBarRestorationID = @"WPTabBarID";
 
-static NSString * const WPBlogListSplitViewRestorationID = @"WPBlogListSplitViewRestorationID";
+static NSString * const WPMySiteSplitViewRestorationID = @"WPBlogListSplitViewRestorationID";
 static NSString * const WPReaderSplitViewRestorationID = @"WPReaderSplitViewRestorationID";
 static NSString * const WPMeSplitViewRestorationID = @"WPMeSplitViewRestorationID";
 static NSString * const WPNotificationsSplitViewRestorationID = @"WPNotificationsSplitViewRestorationID";
 
-static NSString * const WPBlogListNavigationRestorationID = @"WPBlogListNavigationID";
+static NSString * const WPMySiteNavigationRestorationID = @"WPBlogListNavigationID";
 static NSString * const WPReaderNavigationRestorationID = @"WPReaderNavigationID";
 static NSString * const WPMeNavigationRestorationID = @"WPMeNavigationID";
 static NSString * const WPNotificationsNavigationRestorationID  = @"WPNotificationsNavigationID";
@@ -45,7 +45,9 @@ static CGFloat const WPTabBarIconSize = 32.0f;
 
 @interface WPTabBarController () <UITabBarControllerDelegate, UIViewControllerRestoration>
 
+// TODO: Remove after completing site hierarchy change
 @property (nonatomic, strong) BlogListViewController *blogListViewController;
+@property (nonatomic, strong) MySiteViewController *mySiteViewController;
 @property (nonatomic, strong) NotificationsViewController *notificationsViewController;
 @property (nonatomic, strong) ReaderMenuViewController *readerMenuViewController;
 @property (nonatomic, strong) MeViewController *meViewController;
@@ -190,7 +192,7 @@ static CGFloat const WPTabBarIconSize = 32.0f;
     UIImage *mySitesTabBarImage = [UIImage imageNamed:@"icon-tab-mysites"];
     _mySiteNavigationController.tabBarItem.image = mySitesTabBarImage;
     _mySiteNavigationController.tabBarItem.selectedImage = mySitesTabBarImage;
-    _mySiteNavigationController.restorationIdentifier = WPBlogListNavigationRestorationID;
+    _mySiteNavigationController.restorationIdentifier = WPMySiteNavigationRestorationID;
     _mySiteNavigationController.tabBarItem.accessibilityLabel = NSLocalizedString(@"My Site", @"The accessibility value of the my site tab.");
     _mySiteNavigationController.tabBarItem.accessibilityIdentifier = @"mySitesTabButton";
     _mySiteNavigationController.tabBarItem.title = NSLocalizedString(@"My Site", @"The accessibility value of the my site tab.");
@@ -343,7 +345,7 @@ static CGFloat const WPTabBarIconSize = 32.0f;
 {
     if (!_mySiteSplitViewController) {
         _mySiteSplitViewController = [WPSplitViewController new];
-        _mySiteSplitViewController.restorationIdentifier = WPBlogListSplitViewRestorationID;
+        _mySiteSplitViewController.restorationIdentifier = WPMySiteSplitViewRestorationID;
         _mySiteSplitViewController.presentsWithGesture = NO;
         [_mySiteSplitViewController setInitialPrimaryViewController:self.mySiteNavigationController];
         _mySiteSplitViewController.wpPrimaryColumnWidth = WPSplitViewControllerPrimaryColumnWidthNarrow;
@@ -682,9 +684,9 @@ static CGFloat const WPTabBarIconSize = 32.0f;
 {
     [self switchMySiteTabToBlogDetailsForBlog:blog];
 
-    MySiteViewController *blogDetailVC = (MySiteViewController *)self.mySiteNavigationController.topViewController;
-    if ([blogDetailVC isKindOfClass:[MySiteViewController class]]) {
-        [blogDetailVC showDetailViewForSubsection:BlogDetailsSubsectionStats];
+    MySiteViewController *mySiteVC = (MySiteViewController *)self.mySiteNavigationController.topViewController;
+    if ([mySiteVC isKindOfClass:[MySiteViewController class]]) {
+        [mySiteVC showDetailViewForSubsection:BlogDetailsSubsectionStats];
     }
 }
 
@@ -703,9 +705,9 @@ static CGFloat const WPTabBarIconSize = 32.0f;
     
     [self switchMySiteTabToBlogDetailsForBlog:blog];
 
-    MySiteViewController *blogDetailVC = (MySiteViewController *)self.mySiteNavigationController.topViewController;
-    if ([blogDetailVC isKindOfClass:[MySiteViewController class]]) {
-        [blogDetailVC showDetailViewForSubsection:BlogDetailsSubsectionMedia];
+    MySiteViewController *mySiteVC = (MySiteViewController *)self.mySiteNavigationController.topViewController;
+    if ([mySiteVC isKindOfClass:[MySiteViewController class]]) {
+        [mySiteVC showDetailViewForSubsection:BlogDetailsSubsectionMedia];
     }
 }
 
@@ -724,9 +726,9 @@ static CGFloat const WPTabBarIconSize = 32.0f;
 {
     [self switchMySiteTabToBlogDetailsForBlog:blog];
 
-    MySiteViewController *blogDetailVC = (MySiteViewController *)self.mySiteNavigationController.topViewController;
-    if ([blogDetailVC isKindOfClass:[MySiteViewController class]]) {
-        [blogDetailVC showDetailViewForSubsection:BlogDetailsSubsectionThemes];
+    MySiteViewController *mySiteVC = (MySiteViewController *)self.mySiteNavigationController.topViewController;
+    if ([mySiteVC isKindOfClass:[MySiteViewController class]]) {
+        [mySiteVC showDetailViewForSubsection:BlogDetailsSubsectionThemes];
     }
 }
 
