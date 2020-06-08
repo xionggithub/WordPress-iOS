@@ -22,7 +22,7 @@ class MediaNoticeNavigationCoordinator {
 
     static func navigateToMediaLibrary(with userInfo: NSDictionary) {
         if let blog = blog(from: userInfo) {
-            WPTabBarController.sharedInstance().switchMySitesTabToMedia(for: blog)
+            WPTabBarController.sharedInstance().switchMySiteTabToMedia(for: blog)
         }
     }
 

@@ -315,12 +315,12 @@ fileprivate extension SearchManager {
     // MARK: Site Tab Navigation
 
     func openMySitesTab() -> Bool {
-        WPTabBarController.sharedInstance().showMySitesTab()
+        WPTabBarController.sharedInstance().showMySiteTab()
         return true
     }
 
     func openSiteDetailsScreen(for blog: Blog) {
-        WPTabBarController.sharedInstance().switchMySitesTabToBlogDetails(for: blog)
+        WPTabBarController.sharedInstance().switchMySiteTabToBlogDetails(for: blog)
     }
 
     // MARK: Reader Tab Navigation
@@ -472,7 +472,7 @@ fileprivate extension SearchManager {
     // MARK: - Preview
 
     func openPreview(for apost: AbstractPost) {
-        WPTabBarController.sharedInstance().showMySitesTab()
+        WPTabBarController.sharedInstance().showMySiteTab()
         closePreviewIfNeeded(for: apost)
 
         let controller = PreviewWebKitViewController(post: apost)

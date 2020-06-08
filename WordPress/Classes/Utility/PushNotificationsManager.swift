@@ -398,7 +398,7 @@ extension PushNotificationsManager {
         if WPTabBarController.sharedInstance()?.presentedViewController != nil {
             WPTabBarController.sharedInstance()?.dismiss(animated: false)
         }
-        WPTabBarController.sharedInstance()?.showMySitesTab()
+        WPTabBarController.sharedInstance()?.showMySiteTab()
 
         if let taskName = userInfo.string(forKey: QuickStartTracking.taskNameKey) {
             WPAnalytics.track(.quickStartNotificationTapped,

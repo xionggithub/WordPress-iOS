@@ -134,7 +134,7 @@ private extension ReaderReblogPresenter {
                 return
             }
             controller.dismiss(animated: true) {
-                tabBarController.showMySitesTab()
+                tabBarController.showMySiteTab()
             }
         }
 

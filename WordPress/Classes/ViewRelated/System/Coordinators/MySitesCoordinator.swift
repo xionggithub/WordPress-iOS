@@ -18,7 +18,7 @@ class MySitesCoordinator: NSObject {
     }
 
     private func prepareToNavigate() {
-        WPTabBarController.sharedInstance().showMySitesTab()
+        WPTabBarController.sharedInstance().showMySiteTab()
 
         mySiteNavigationController.viewControllers = [blogListViewController]
     }

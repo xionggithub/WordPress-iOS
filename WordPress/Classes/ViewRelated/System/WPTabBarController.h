@@ -46,7 +46,7 @@ typedef NS_ENUM(NSUInteger, WPTabType) {
 
 - (NSString *)currentlySelectedScreen;
 
-- (void)showMySitesTab;
+- (void)showMySiteTab;
 - (void)showReaderTab;
 - (void)resetReaderTab;
 - (void)showPostTab;
@@ -57,14 +57,14 @@ typedef NS_ENUM(NSUInteger, WPTabType) {
 - (void)showNotificationsTab;
 - (void)showPostTabAnimated:(BOOL)animated toMedia:(BOOL)openToMedia;
 - (void)showReaderTabForPost:(NSNumber *)postId onBlog:(NSNumber *)blogId;
-- (void)switchMySitesTabToAddNewSite;
-- (void)switchMySitesTabToStatsViewForBlog:(Blog *)blog;
-- (void)switchMySitesTabToMediaForBlog:(Blog *)blog;
-- (void)switchMySitesTabToCustomizeViewForBlog:(Blog *)blog;
-- (void)switchMySitesTabToThemesViewForBlog:(Blog *)blog;
+- (void)switchMySiteTabToAddNewSite;
+- (void)switchMySiteTabToStatsViewForBlog:(Blog *)blog;
+- (void)switchMySiteTabToMediaForBlog:(Blog *)blog;
+- (void)switchMySiteTabToCustomizeViewForBlog:(Blog *)blog;
+- (void)switchMySiteTabToThemesViewForBlog:(Blog *)blog;
 - (void)switchTabToPostsListForPost:(AbstractPost *)post;
 - (void)switchTabToPagesListForPost:(AbstractPost *)post;
-- (void)switchMySitesTabToBlogDetailsForBlog:(Blog *)blog;
+- (void)switchMySiteTabToBlogDetailsForBlog:(Blog *)blog;
 
 - (void)popNotificationsTabToRoot;
 - (void)switchNotificationsTabToNotificationSettings;

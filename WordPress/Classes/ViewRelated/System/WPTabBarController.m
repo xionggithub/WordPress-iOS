@@ -517,7 +517,7 @@ static CGFloat const WPTabBarIconSize = 32.0f;
     return tabIndex + (toTabType ? -tabOffset : tabOffset);
 }
 
-- (void)showMySitesTab
+- (void)showMySiteTab
 {
     [self showTabForIndex:WPTabMySites];
 }
@@ -538,7 +538,7 @@ static CGFloat const WPTabBarIconSize = 32.0f;
     BlogService *blogService = [[BlogService alloc] initWithManagedObjectContext:context];
     // Ignore taps on the post tab and instead show the modal.
     if ([blogService blogCountForAllAccounts] == 0) {
-        [self switchMySitesTabToAddNewSite];
+        [self switchMySiteTabToAddNewSite];
     } else {
         [self showPostTabAnimated:true toMedia:false blog:nil afterDismiss:afterDismiss];
     }
@@ -551,7 +551,7 @@ static CGFloat const WPTabBarIconSize = 32.0f;
     NSManagedObjectContext *context = [[ContextManager sharedInstance] mainContext];
     BlogService *blogService = [[BlogService alloc] initWithManagedObjectContext:context];
     if ([blogService blogCountForAllAccounts] == 0) {
-        [self switchMySitesTabToAddNewSite];
+        [self switchMySiteTabToAddNewSite];
     } else {
         [self showPostTabAnimated:YES toMedia:NO blog:blog];
     }
@@ -644,7 +644,7 @@ static CGFloat const WPTabBarIconSize = 32.0f;
         }
     }
 
-    [self switchMySitesTabToBlogDetailsForBlog:post.blog];
+    [self switchMySiteTabToBlogDetailsForBlog:post.blog];
 
     MySiteViewController *blogDetailVC = (MySiteViewController *)self.mySiteNavigationController.topViewController;
     if ([blogDetailVC isKindOfClass:[MySiteViewController class]]) {
@@ -664,7 +664,7 @@ static CGFloat const WPTabBarIconSize = 32.0f;
         }
     }
 
-    [self switchMySitesTabToBlogDetailsForBlog:post.blog];
+    [self switchMySiteTabToBlogDetailsForBlog:post.blog];
 
     MySiteViewController *blogDetailVC = (MySiteViewController *)self.mySiteNavigationController.topViewController;
     if ([blogDetailVC isKindOfClass:[MySiteViewController class]]) {
@@ -672,15 +672,15 @@ static CGFloat const WPTabBarIconSize = 32.0f;
     }
 }
 
-- (void)switchMySitesTabToAddNewSite
+- (void)switchMySiteTabToAddNewSite
 {
     [self showTabForIndex:WPTabMySites];
     [self.blogListViewController presentInterfaceForAddingNewSiteFrom:self.tabBar];
 }
 
-- (void)switchMySitesTabToStatsViewForBlog:(Blog *)blog
+- (void)switchMySiteTabToStatsViewForBlog:(Blog *)blog
 {
-    [self switchMySitesTabToBlogDetailsForBlog:blog];
+    [self switchMySiteTabToBlogDetailsForBlog:blog];
 
     MySiteViewController *blogDetailVC = (MySiteViewController *)self.mySiteNavigationController.topViewController;
     if ([blogDetailVC isKindOfClass:[MySiteViewController class]]) {
@@ -688,7 +688,7 @@ static CGFloat const WPTabBarIconSize = 32.0f;
     }
 }
 
-- (void)switchMySitesTabToMediaForBlog:(Blog *)blog
+- (void)switchMySiteTabToMediaForBlog:(Blog *)blog
 {
     if ([self adjustedTabIndex:self.selectedIndex toTabType:false] == WPTabMySites) {
         UIViewController *topViewController = (MySiteViewController *)self.mySiteNavigationController.topViewController;
@@ -701,7 +701,7 @@ static CGFloat const WPTabBarIconSize = 32.0f;
         }
     }
     
-    [self switchMySitesTabToBlogDetailsForBlog:blog];
+    [self switchMySiteTabToBlogDetailsForBlog:blog];
 
     MySiteViewController *blogDetailVC = (MySiteViewController *)self.mySiteNavigationController.topViewController;
     if ([blogDetailVC isKindOfClass:[MySiteViewController class]]) {
@@ -709,9 +709,9 @@ static CGFloat const WPTabBarIconSize = 32.0f;
     }
 }
 
-- (void)switchMySitesTabToCustomizeViewForBlog:(Blog *)blog
+- (void)switchMySiteTabToCustomizeViewForBlog:(Blog *)blog
 {
-    [self switchMySitesTabToThemesViewForBlog:blog];
+    [self switchMySiteTabToThemesViewForBlog:blog];
 
     UIViewController *topVC = [self.mySiteSplitViewController topDetailViewController];
     if ([topVC isKindOfClass:[ThemeBrowserViewController class]]) {
@@ -720,9 +720,9 @@ static CGFloat const WPTabBarIconSize = 32.0f;
     }
 }
 
-- (void)switchMySitesTabToThemesViewForBlog:(Blog *)blog
+- (void)switchMySiteTabToThemesViewForBlog:(Blog *)blog
 {
-    [self switchMySitesTabToBlogDetailsForBlog:blog];
+    [self switchMySiteTabToBlogDetailsForBlog:blog];
 
     MySiteViewController *blogDetailVC = (MySiteViewController *)self.mySiteNavigationController.topViewController;
     if ([blogDetailVC isKindOfClass:[MySiteViewController class]]) {
@@ -730,7 +730,7 @@ static CGFloat const WPTabBarIconSize = 32.0f;
     }
 }
 
-- (void)switchMySitesTabToBlogDetailsForBlog:(Blog *)blog
+- (void)switchMySiteTabToBlogDetailsForBlog:(Blog *)blog
 {
     [self showTabForIndex:WPTabMySites];
 
@@ -997,7 +997,7 @@ static CGFloat const WPTabBarIconSize = 32.0f;
 
     return @[
              [UIKeyCommand keyCommandWithInput:@"N" modifierFlags:UIKeyModifierCommand action:@selector(showPostTab) discoverabilityTitle:NSLocalizedString(@"New Post", @"The accessibility value of the post tab.")],
-             [UIKeyCommand keyCommandWithInput:@"1" modifierFlags:UIKeyModifierCommand action:@selector(showMySitesTab) discoverabilityTitle:NSLocalizedString(@"My Site", @"The accessibility value of the my site tab.")],
+             [UIKeyCommand keyCommandWithInput:@"1" modifierFlags:UIKeyModifierCommand action:@selector(showMySiteTab) discoverabilityTitle:NSLocalizedString(@"My Site", @"The accessibility value of the my site tab.")],
              [UIKeyCommand keyCommandWithInput:@"2" modifierFlags:UIKeyModifierCommand action:@selector(showReaderTab) discoverabilityTitle:NSLocalizedString(@"Reader", @"The accessibility value of the reader tab.")],
              // will be removed when the new IA implementation completes
              [UIKeyCommand keyCommandWithInput:@"3" modifierFlags:UIKeyModifierCommand action:@selector(showMeTab) discoverabilityTitle:NSLocalizedString(@"Me", @"The accessibility value of the me tab.")],
