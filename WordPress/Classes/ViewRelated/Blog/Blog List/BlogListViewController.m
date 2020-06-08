@@ -24,7 +24,7 @@ static NSInteger HideSearchMinSites = 3;
 @property (nonatomic,   weak) UIAlertController *addSiteAlertController;
 @property (nonatomic, strong) UIBarButtonItem *addSiteButton;
 
-@property (nonatomic, strong) BlogDetailsViewController *blogDetailsViewController;
+@property (nonatomic, strong) MySiteViewController *mySiteViewController;
 @property (nonatomic, strong) BlogListDataSource *dataSource;
 
 @property (nonatomic) NSDate *firstHide;
@@ -156,7 +156,7 @@ static NSInteger HideSearchMinSites = 3;
     [self updateSearchVisibility];
     [self maybeShowNUX];
     [self updateViewsForCurrentSiteCount];
-    [self validateBlogDetailsViewController];
+    [self validateMySiteViewController];
     [self syncBlogs];
     [self setAddSiteBarButtonItem];
     [self updateCurrentBlogSelection];
@@ -349,11 +349,11 @@ static NSInteger HideSearchMinSites = 3;
     }
 }
 
-- (void)validateBlogDetailsViewController
+- (void)validateMySiteViewController
 {
-    // Nil out our blog details VC reference if the blog no longer exists
-    if (self.blogDetailsViewController && ![self.dataSource indexPathForBlog:self.blogDetailsViewController.blog]) {
-        self.blogDetailsViewController = nil;
+    // Nil out our my site VC reference if the blog no longer exists
+    if (self.mySiteViewController && ![self.dataSource indexPathForBlog:self.mySiteViewController.blog]) {
+        self.mySiteViewController = nil;
     }
 }
 
@@ -788,25 +788,25 @@ static NSInteger HideSearchMinSites = 3;
 
 - (void)setSelectedBlog:(Blog *)selectedBlog animated:(BOOL)animated
 {
-    if (selectedBlog != _selectedBlog || !_blogDetailsViewController) {
+    if (selectedBlog != _selectedBlog || !_mySiteViewController) {
         _selectedBlog = selectedBlog;
-        self.blogDetailsViewController = [self makeBlogDetailsViewController];
-        self.blogDetailsViewController.blog = selectedBlog;
+        self.mySiteViewController = [self makeMySiteViewController];
+        self.mySiteViewController.blog = selectedBlog;
 
         if (![self splitViewControllerIsHorizontallyCompact]) {
             WPSplitViewController *splitViewController = (WPSplitViewController *)self.splitViewController;
-            [self showDetailViewController:[(UIViewController <WPSplitViewControllerDetailProvider> *)self.blogDetailsViewController initialDetailViewControllerForSplitView:splitViewController] sender:self];
+            [self showDetailViewController:[(UIViewController <WPSplitViewControllerDetailProvider> *)self.mySiteViewController initialDetailViewControllerForSplitView:splitViewController] sender:self];
         }
     }
 
     /// Issue #7284:
-    /// Prevents pushing BlogDetailsViewController, if it was already in the hierarchy.
+    /// Prevents pushing MySiteViewController, if it was already in the hierarchy.
     ///
-    if ([self.navigationController.viewControllers containsObject:self.blogDetailsViewController]) {
+    if ([self.navigationController.viewControllers containsObject:self.mySiteViewController]) {
         return;
     }
 
-    [self.navigationController pushViewController:self.blogDetailsViewController animated:animated];
+    [self.navigationController pushViewController:self.mySiteViewController animated:animated];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -995,7 +995,7 @@ static NSInteger HideSearchMinSites = 3;
     [self maybeShowNUX];
     [self updateSearchVisibility];
     [self updateViewsForCurrentSiteCount];
-    [self validateBlogDetailsViewController];
+    [self validateMySiteViewController];
 }
 
 #pragma mark - NoResultsViewControllerDelegate
@@ -1030,12 +1030,12 @@ static NSInteger HideSearchMinSites = 3;
 
 - (UIViewController *)initialDetailViewControllerForSplitView:(WPSplitViewController *)splitView
 {
-    if (self.dataSource.displayedBlogsCount == 0 || !self.blogDetailsViewController) {
+    if (self.dataSource.displayedBlogsCount == 0 || !self.mySiteViewController) {
         UIViewController *emptyViewController = [UIViewController new];
         [WPStyleGuide configureColorsForView:emptyViewController.view andTableView:nil];
         return emptyViewController;
     } else {
-        return [(UIViewController <WPSplitViewControllerDetailProvider> *)self.blogDetailsViewController initialDetailViewControllerForSplitView:splitView];
+        return [(UIViewController <WPSplitViewControllerDetailProvider> *)self.mySiteViewController initialDetailViewControllerForSplitView:splitView];
     }
 }
 

@@ -33,8 +33,8 @@ class MySitesCoordinator: NSObject {
         blogListViewController.setSelectedBlog(blog, animated: false)
 
         if let subsection = subsection,
-            let blogDetailsViewController = mySiteNavigationController.topViewController as? BlogDetailsViewController {
-            blogDetailsViewController.showDetailView(for: subsection)
+            let mySiteViewController = mySiteNavigationController.topViewController as? MySiteViewController {
+            mySiteViewController.showDetailView(for: subsection)
         }
     }
 
@@ -47,7 +47,7 @@ class MySitesCoordinator: NSObject {
     func showStats(for blog: Blog, timePeriod: StatsPeriodType) {
         showBlogDetails(for: blog)
 
-        if let blogDetailsViewController = mySiteNavigationController.topViewController as? BlogDetailsViewController {
+        if let mySiteViewController = mySiteNavigationController.topViewController as? MySiteViewController {
             // Setting this user default is a bit of a hack, but it's by far the easiest way to
             // get the stats view controller displaying the correct period. I spent some time
             // trying to do it differently, but the existing stats view controller setup is
@@ -56,7 +56,7 @@ class MySitesCoordinator: NSObject {
             // configuration for now. 2018-07-11 @frosty
             UserDefaults.standard.set(timePeriod.rawValue, forKey: MySitesCoordinator.statsPeriodTypeDefaultsKey)
 
-            blogDetailsViewController.showDetailView(for: .stats)
+            mySiteViewController.showDetailView(for: .stats)
         }
     }
 
@@ -103,7 +103,7 @@ class MySitesCoordinator: NSObject {
 
         // PerformWithoutAnimation is required here, otherwise the view controllers
         // potentially get added to the navigation controller out of order
-        // (ShowDetailViewController, used by BlogDetailsViewController is animated)
+        // (ShowDetailViewController, used by MySiteViewController is animated)
         UIView.performWithoutAnimation {
             showBlogDetails(for: blog, then: .plugins)
         }

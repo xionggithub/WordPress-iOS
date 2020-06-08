@@ -7,7 +7,7 @@
 #import "Blog.h"
 
 #import "BlogListViewController.h"
-#import "BlogDetailsViewController.h"
+#import "MySiteViewController.h"
 #import "WPScrollableViewController.h"
 #import <WordPressShared/WPDeviceIdentification.h>
 #import "WPAppAnalytics.h"
@@ -646,8 +646,8 @@ static CGFloat const WPTabBarIconSize = 32.0f;
 
     [self switchMySitesTabToBlogDetailsForBlog:post.blog];
 
-    BlogDetailsViewController *blogDetailVC = (BlogDetailsViewController *)self.mySiteNavigationController.topViewController;
-    if ([blogDetailVC isKindOfClass:[BlogDetailsViewController class]]) {
+    MySiteViewController *blogDetailVC = (MySiteViewController *)self.mySiteNavigationController.topViewController;
+    if ([blogDetailVC isKindOfClass:[MySiteViewController class]]) {
         [blogDetailVC showDetailViewForSubsection:BlogDetailsSubsectionPosts];
     }
 }
@@ -666,8 +666,8 @@ static CGFloat const WPTabBarIconSize = 32.0f;
 
     [self switchMySitesTabToBlogDetailsForBlog:post.blog];
 
-    BlogDetailsViewController *blogDetailVC = (BlogDetailsViewController *)self.mySiteNavigationController.topViewController;
-    if ([blogDetailVC isKindOfClass:[BlogDetailsViewController class]]) {
+    MySiteViewController *blogDetailVC = (MySiteViewController *)self.mySiteNavigationController.topViewController;
+    if ([blogDetailVC isKindOfClass:[MySiteViewController class]]) {
         [blogDetailVC showDetailViewForSubsection:BlogDetailsSubsectionPages];
     }
 }
@@ -682,8 +682,8 @@ static CGFloat const WPTabBarIconSize = 32.0f;
 {
     [self switchMySitesTabToBlogDetailsForBlog:blog];
 
-    BlogDetailsViewController *blogDetailVC = (BlogDetailsViewController *)self.mySiteNavigationController.topViewController;
-    if ([blogDetailVC isKindOfClass:[BlogDetailsViewController class]]) {
+    MySiteViewController *blogDetailVC = (MySiteViewController *)self.mySiteNavigationController.topViewController;
+    if ([blogDetailVC isKindOfClass:[MySiteViewController class]]) {
         [blogDetailVC showDetailViewForSubsection:BlogDetailsSubsectionStats];
     }
 }
@@ -691,7 +691,7 @@ static CGFloat const WPTabBarIconSize = 32.0f;
 - (void)switchMySitesTabToMediaForBlog:(Blog *)blog
 {
     if ([self adjustedTabIndex:self.selectedIndex toTabType:false] == WPTabMySites) {
-        UIViewController *topViewController = (BlogDetailsViewController *)self.mySiteNavigationController.topViewController;
+        UIViewController *topViewController = (MySiteViewController *)self.mySiteNavigationController.topViewController;
         if ([topViewController isKindOfClass:[MediaLibraryViewController class]]) {
             MediaLibraryViewController *mediaVC = (MediaLibraryViewController *)topViewController;
             if (mediaVC.blog == blog) {
@@ -703,8 +703,8 @@ static CGFloat const WPTabBarIconSize = 32.0f;
     
     [self switchMySitesTabToBlogDetailsForBlog:blog];
 
-    BlogDetailsViewController *blogDetailVC = (BlogDetailsViewController *)self.mySiteNavigationController.topViewController;
-    if ([blogDetailVC isKindOfClass:[BlogDetailsViewController class]]) {
+    MySiteViewController *blogDetailVC = (MySiteViewController *)self.mySiteNavigationController.topViewController;
+    if ([blogDetailVC isKindOfClass:[MySiteViewController class]]) {
         [blogDetailVC showDetailViewForSubsection:BlogDetailsSubsectionMedia];
     }
 }
@@ -724,8 +724,8 @@ static CGFloat const WPTabBarIconSize = 32.0f;
 {
     [self switchMySitesTabToBlogDetailsForBlog:blog];
 
-    BlogDetailsViewController *blogDetailVC = (BlogDetailsViewController *)self.mySiteNavigationController.topViewController;
-    if ([blogDetailVC isKindOfClass:[BlogDetailsViewController class]]) {
+    MySiteViewController *blogDetailVC = (MySiteViewController *)self.mySiteNavigationController.topViewController;
+    if ([blogDetailVC isKindOfClass:[MySiteViewController class]]) {
         [blogDetailVC showDetailViewForSubsection:BlogDetailsSubsectionThemes];
     }
 }
@@ -793,8 +793,8 @@ static CGFloat const WPTabBarIconSize = 32.0f;
         return nil;
     }
 
-    BlogDetailsViewController *blogDetailsController = (BlogDetailsViewController *)[[self.mySiteNavigationController.viewControllers wp_filter:^BOOL(id obj) {
-        return [obj isKindOfClass:[BlogDetailsViewController class]];
+    MySiteViewController *blogDetailsController = (MySiteViewController *)[[self.mySiteNavigationController.viewControllers wp_filter:^BOOL(id obj) {
+        return [obj isKindOfClass:[MySiteViewController class]];
     }] firstObject];
     return blogDetailsController.blog;
 }

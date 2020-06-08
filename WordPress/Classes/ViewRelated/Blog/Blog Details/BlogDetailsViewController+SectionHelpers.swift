@@ -25,7 +25,7 @@ extension BlogDetailsSubsection {
     }
 }
 
-extension BlogDetailsViewController {
+extension MySiteViewController {
     @objc func findSectionIndex(sections: [BlogDetailsSection], category: BlogDetailsSectionCategory) -> Int {
         return sections.findSectionIndex(of: category) ?? NSNotFound
     }

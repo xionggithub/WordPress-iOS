@@ -1,6 +1,6 @@
 import Gridicons
 
-extension BlogDetailsViewController {
+extension MySiteViewController {
     @objc func configureHeaderView() -> BlogDetailHeaderView {
         let headerView = BlogDetailHeaderView(items: [
             ActionRow.Item(image: .gridicon(.statsAlt), title: NSLocalizedString("Stats", comment: "Noun. Abbv. of Statistics. Links to a blog's Stats screen.")) { [weak self] in

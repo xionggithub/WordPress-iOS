@@ -3,7 +3,7 @@ import Gridicons
 private var alertWorkItem: DispatchWorkItem?
 private var observer: NSObjectProtocol?
 
-extension BlogDetailsViewController {
+extension MySiteViewController {
     @objc func startObservingQuickStart() {
         observer = NotificationCenter.default.addObserver(forName: .QuickStartTourElementChangedNotification, object: nil, queue: nil) { [weak self] (notification) in
             guard self?.blog.managedObjectContext != nil else {

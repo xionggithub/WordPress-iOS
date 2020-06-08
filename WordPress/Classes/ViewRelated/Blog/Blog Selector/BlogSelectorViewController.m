@@ -1,5 +1,5 @@
 #import "BlogSelectorViewController.h"
-#import "BlogDetailsViewController.h"
+#import "MySiteViewController.h"
 #import "WPBlogTableViewCell.h"
 #import "ContextManager.h"
 #import "Blog.h"

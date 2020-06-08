@@ -1,6 +1,6 @@
 import Foundation
 
-extension BlogDetailsViewController: SearchableActivityConvertable {
+extension MySiteViewController: SearchableActivityConvertable {
     var activityType: String {
         return WPActivityType.siteDetails.rawValue
     }
@@ -77,7 +77,7 @@ extension BlogDetailsViewController: SearchableActivityConvertable {
 
 // MARK: - UIResponder's ActivityContinuation Interface
 
-extension BlogDetailsViewController {
+extension MySiteViewController {
     // We need to override this to ensure the userInfo is persisted into the spotlight index.
     //
     override open func updateUserActivityState(_ activity: NSUserActivity) {

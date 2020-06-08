@@ -112,7 +112,7 @@ typedef NS_ENUM(NSUInteger, BlogDetailsNavigationSource) {
 
 @protocol ScenePresenter;
 
-@interface BlogDetailsViewController : UIViewController <UIViewControllerRestoration, UIViewControllerTransitioningDelegate> {
+@interface MySiteViewController : UIViewController <UIViewControllerRestoration, UIViewControllerTransitioningDelegate> {
     
 }
 

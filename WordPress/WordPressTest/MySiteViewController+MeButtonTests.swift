@@ -6,7 +6,7 @@ class MockScenePresenter: ScenePresenter {
     var presentExpectation: XCTestExpectation?
 
     func present(on viewController: UIViewController, animated: Bool, completion: (() -> Void)?) {
-        guard viewController is BlogDetailsViewController else {
+        guard viewController is MySiteViewController else {
             XCTFail("Invalid presenting viewController")
             return
         }
@@ -16,9 +16,9 @@ class MockScenePresenter: ScenePresenter {
     }
 }
 
-class BlogDetailsViewControllerTests: XCTestCase {
+class MySiteViewControllerTests: XCTestCase {
 
-    private var blogDetailsViewController: BlogDetailsViewController?
+    private var mySiteViewController: MySiteViewController?
     private var scenePresenter: MockScenePresenter?
 
     private struct TestConstants {
@@ -33,18 +33,18 @@ class BlogDetailsViewControllerTests: XCTestCase {
             XCTFail("Presenter not initialized")
             return
         }
-        blogDetailsViewController = BlogDetailsViewController(meScenePresenter: presenter)
+        mySiteViewController = MySiteViewController(meScenePresenter: presenter)
     }
 
     override func tearDown() {
-        blogDetailsViewController = nil
+        mySiteViewController = nil
         scenePresenter = nil
     }
 
     func testInitWithScenePresenter() {
         // Given
-        guard let controller = blogDetailsViewController else {
-            XCTFail("Blog details viewController not initialized")
+        guard let controller = mySiteViewController else {
+            XCTFail("My site viewController not initialized")
             return
         }
         // When
@@ -61,8 +61,8 @@ class BlogDetailsViewControllerTests: XCTestCase {
 
     func testPresentMeOnButtonTap() {
         // Given
-        guard let controller = blogDetailsViewController else {
-            XCTFail("Blog details viewController not initialized")
+        guard let controller = mySiteViewController else {
+            XCTFail("My site viewController not initialized")
             return
         }
         controller.addMeButtonToNavigationBar()
@@ -72,15 +72,15 @@ class BlogDetailsViewControllerTests: XCTestCase {
         }
         scenePresenter?.presentExpectation = expectation(description: "Me was presented")
         // When
-
-        guard let target = blogDetailsViewController?.target(forAction: #selector(BlogDetailsViewController.presentHandler),
-                                                             withSender: blogDetailsViewController) else {
-            XCTFail("Target not found")
-            return
+        
+        guard let target = mySiteViewController?.target(forAction: #selector(MySiteViewController.presentHandler),
+                                                        withSender: mySiteViewController) else {
+                                                            XCTFail("Target not found")
+                                                            return
         }
 
         let actionableTarget = target as AnyObject
-        _ = actionableTarget.perform(#selector(BlogDetailsViewController.presentHandler))
+        _ = actionableTarget.perform(#selector(MySiteViewController.presentHandler))
 
         // Then
         guard let presentedController = scenePresenter?.presentedViewController else {

@@ -1,4 +1,4 @@
-#import "BlogDetailsViewController.h"
+#import "MySiteViewController.h"
 
 #import "AccountService.h"
 #import "BlogService.h"
@@ -159,7 +159,7 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/stats/";
 
 #pragma mark -
 
-@interface BlogDetailsViewController () <UIActionSheetDelegate, UIAlertViewDelegate, WPSplitViewControllerDetailProvider, BlogDetailHeaderViewDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface MySiteViewController () <UIActionSheetDelegate, UIAlertViewDelegate, WPSplitViewControllerDetailProvider, BlogDetailHeaderViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) BlogDetailHeaderView *headerView;
 @property (nonatomic, strong) NSArray *headerViewHorizontalConstraints;
@@ -179,7 +179,7 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/stats/";
 
 @end
 
-@implementation BlogDetailsViewController
+@implementation MySiteViewController
 @synthesize restorableSelectedIndexPath = _restorableSelectedIndexPath;
 
 #pragma mark - State Restoration
@@ -208,13 +208,13 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/stats/";
     UISplitViewController *splitViewController = [[WPTabBarController sharedInstance] mySiteSplitViewController];
     UINavigationController *navigationController = splitViewController.viewControllers.firstObject;
     if (navigationController && [navigationController isKindOfClass:[UINavigationController class]]) {
-        BlogDetailsViewController *topViewController = (BlogDetailsViewController *)navigationController.topViewController;
-        if ([topViewController isKindOfClass:[BlogDetailsViewController class]] && topViewController.blog == restoredBlog) {
+        MySiteViewController *topViewController = (MySiteViewController *)navigationController.topViewController;
+        if ([topViewController isKindOfClass:[MySiteViewController class]] && topViewController.blog == restoredBlog) {
             return topViewController;
         }
     }
 
-    BlogDetailsViewController *viewController = [[self alloc] initWithStyle:UITableViewStyleGrouped];
+    MySiteViewController *viewController = [[self alloc] initWithStyle:UITableViewStyleGrouped];
     viewController.blog = restoredBlog;
 
     return viewController;

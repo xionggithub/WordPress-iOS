@@ -1,8 +1,8 @@
-/// Factory method(s) for BlogDetailsViewController
+/// Factory method(s) for MySiteViewController
 extension BlogListViewController {
-    /// returns an instance of BlogDetailsViewController initialized with a ScenePresenter (concrete) type
-    @objc func makeBlogDetailsViewController() -> BlogDetailsViewController {
-        return BlogDetailsViewController(meScenePresenter: makeMeScenePresenter())
+    /// returns an instance of MySiteViewController initialized with a ScenePresenter (concrete) type
+    @objc func makeMySiteViewController() -> MySiteViewController {
+        return MySiteViewController(meScenePresenter: makeMeScenePresenter())
     }
 
     func makeMeScenePresenter() -> ScenePresenter {

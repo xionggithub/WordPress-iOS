@@ -1,7 +1,7 @@
 import Gridicons
 import WordPressFlux
 
-extension BlogDetailsViewController {
+extension MySiteViewController {
     @objc func domainCreditSectionViewModel() -> BlogDetailsSection {
         let image = UIImage.gridicon(.info)
         let row = BlogDetailsRow(title: NSLocalizedString("Register Domain", comment: "Action to redeem domain credit."),
@@ -50,7 +50,7 @@ extension BlogDetailsViewController {
     }
 }
 
-extension BlogDetailsViewController: DomainCreditRedemptionSuccessViewControllerDelegate {
+extension MySiteViewController: DomainCreditRedemptionSuccessViewControllerDelegate {
     func continueButtonPressed() {
         dismiss(animated: true) { [weak self] in
             guard let email = self?.accountEmail() else {

@@ -14,7 +14,6 @@
 #import "BlogSyncFacade.h"
 #import "BlogSelectorViewController.h"
 #import "BlogListViewController.h"
-#import "BlogDetailsViewController.h"
 
 #import "Comment.h"
 #import "CommentService.h"
@@ -34,6 +33,7 @@
 #import "MediaLibraryPickerDataSource.h"
 #import "MediaService.h"
 #import "MeHeaderView.h"
+#import "MySiteViewController.h"
 
 #import "NavBarTitleDropdownButton.h"
 #import "NSAttributedString+Util.h"

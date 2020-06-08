@@ -3,28 +3,28 @@ import XCTest
 
 class BlogDetailsSectionIndexTests: XCTestCase {
     func testFindingExistingSectionIndex() {
-        let blogDetailsViewController = BlogDetailsViewController()
+        let mySiteViewController = MySiteViewController()
         let sections = [
             BlogDetailsSection(title: nil, andRows: [], category: .general),
             BlogDetailsSection(title: nil, andRows: [], category: .domainCredit)
         ]
-        let sectionIndex = blogDetailsViewController.findSectionIndex(sections: sections, category: .general)
+        let sectionIndex = mySiteViewController.findSectionIndex(sections: sections, category: .general)
         XCTAssertEqual(sectionIndex, 0)
     }
 
     func testFindingNonExistingSectionIndex() {
-        let blogDetailsViewController = BlogDetailsViewController()
+        let mySiteViewController = MySiteViewController()
         let sections = [
             BlogDetailsSection(title: nil, andRows: [], category: .general),
             BlogDetailsSection(title: nil, andRows: [], category: .domainCredit)
         ]
-        let sectionIndex = blogDetailsViewController.findSectionIndex(sections: sections, category: .external)
+        let sectionIndex = mySiteViewController.findSectionIndex(sections: sections, category: .external)
         XCTAssertEqual(sectionIndex, NSNotFound)
     }
 
     func testFindingSectionIndexFromEmptySections() {
-        let blogDetailsViewController = BlogDetailsViewController()
-        let sectionIndex = blogDetailsViewController.findSectionIndex(sections: [], category: .external)
+        let mySiteViewController = MySiteViewController()
+        let sectionIndex = mySiteViewController.findSectionIndex(sections: [], category: .external)
         XCTAssertEqual(sectionIndex, NSNotFound)
     }
 }
