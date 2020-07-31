@@ -7,6 +7,7 @@ enum FeatureFlag: Int, CaseIterable {
     case unifiedAuth
     case unifiedSiteAddress
     case unifiedGoogle
+    case unifiedSignup
     case meMove
     case floatingCreateButton
     case newReaderNavigation
@@ -15,6 +16,7 @@ enum FeatureFlag: Int, CaseIterable {
     case homepageSettings
     case readerImprovementsPhase2
     case gutenbergMentions
+    case gutenbergModalLayoutPicker
 
     /// Returns a boolean indicating if the feature is enabled
     var enabled: Bool {
@@ -33,6 +35,8 @@ enum FeatureFlag: Int, CaseIterable {
             return false
         case .unifiedGoogle:
             return true
+        case .unifiedSignup:
+            return false
         case .meMove:
             return true
         case .floatingCreateButton:
@@ -49,6 +53,8 @@ enum FeatureFlag: Int, CaseIterable {
             return false
         case .gutenbergMentions:
             return BuildConfiguration.current ~= [.localDeveloper, .a8cBranchTest, .a8cPrereleaseTesting]
+        case .gutenbergModalLayoutPicker:
+            return BuildConfiguration.current ~= [.localDeveloper, .a8cBranchTest]
         }
     }
 }
@@ -77,6 +83,8 @@ extension FeatureFlag: OverrideableFlag {
             return "Unified Auth - Site Address"
         case .unifiedGoogle:
             return "Unified Auth - Google"
+        case .unifiedSignup:
+            return "Unified Auth - Sign Up"
         case .meMove:
             return "Move the Me Scene to My Site"
         case .floatingCreateButton:
@@ -93,6 +101,8 @@ extension FeatureFlag: OverrideableFlag {
             return "Reader Improvements Phase 2"
         case .gutenbergMentions:
             return "Mentions in Gutenberg"
+        case .gutenbergModalLayoutPicker:
+            return "Gutenberg Modal Layout Picker"
         }
     }
 
