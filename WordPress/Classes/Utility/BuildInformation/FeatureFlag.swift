@@ -32,7 +32,7 @@ enum FeatureFlag: Int, CaseIterable {
         case .unifiedSiteAddress:
             return false
         case .unifiedGoogle:
-            return false
+            return true
         case .meMove:
             return true
         case .floatingCreateButton:
