@@ -239,12 +239,20 @@ CGFloat const STVSeparatorHeight = 1.f;
         return NO;
     }
     
-    if ([word hasPrefix:@"@"]) {
+    /*if ([word hasPrefix:@"@"]) {
         self.searchText = word;
         if (self.searchText.length > 1) {
             NSString *searchQuery = [word substringFromIndex:1];
-            NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"(displayName contains[c] %@) OR (username contains[c] %@)",
-                                            searchQuery, searchQuery];
+            NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"(displayName contains[c] %@) OR (username contains[c] %@)", searchQuery, searchQuery];
+            self.searchResults = [[self.suggestions filteredArrayUsingPredicate:resultPredicate] mutableCopy];
+        } else {
+            self.searchResults = [self.suggestions mutableCopy];
+        }
+    } */if ([word hasPrefix:@"@"]) {
+        self.searchText = word;
+        if (self.searchText.length > 1) {
+            NSString *searchQuery = [word substringFromIndex:1];
+            NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"(title contains[c] %@) OR (siteURL contains[c] %@)", searchQuery, searchQuery];
             self.searchResults = [[self.suggestions filteredArrayUsingPredicate:resultPredicate] mutableCopy];
         } else {
             self.searchResults = [self.suggestions mutableCopy];
@@ -310,25 +318,35 @@ CGFloat const STVSeparatorHeight = 1.f;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
-    
-    UserAutocomplete *userAutocomplete = [self.searchResults objectAtIndex:indexPath.row];
-    cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", userAutocomplete.username];
-    cell.displayNameLabel.text = userAutocomplete.displayName;
-    cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-    cell.avatarImageView.image = [UIImage imageNamed:@"gravatar"];
-    cell.imageDownloadHash = userAutocomplete.imageURL.hash;
-    [self loadAvatarForSuggestion:userAutocomplete success:^(UIImage *image) {
-        if (indexPath.row >= self.searchResults.count) {
-            return;
-        }
 
-        UserAutocomplete *reloaded = [self.searchResults objectAtIndex:indexPath.row];
-        if (cell.imageDownloadHash != reloaded.imageURL.hash) {
-            return;
-        }
+    id obj = [self.searchResults objectAtIndex:indexPath.row];
 
-        cell.avatarImageView.image = image;
-    }];
+    if ([obj isKindOfClass:[UserAutocomplete class]]) {
+        UserAutocomplete *userAutocomplete = (UserAutocomplete *)obj;
+        cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", userAutocomplete.username];
+        cell.displayNameLabel.text = userAutocomplete.displayName;
+        cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+        cell.avatarImageView.image = [UIImage imageNamed:@"gravatar"];
+        cell.imageDownloadHash = userAutocomplete.imageURL.hash;
+        [self loadAvatarForSuggestion:userAutocomplete success:^(UIImage *image) {
+            if (indexPath.row >= self.searchResults.count) {
+                return;
+            }
+
+            UserAutocomplete *reloaded = [self.searchResults objectAtIndex:indexPath.row];
+            if (cell.imageDownloadHash != reloaded.imageURL.hash) {
+                return;
+            }
+
+            cell.avatarImageView.image = image;
+        }];
+    } else {
+        Autocomplete *xpostAutocomplete = (Autocomplete *)obj;
+        cell.usernameLabel.text = [NSString stringWithFormat:@"+%@", xpostAutocomplete.title];
+        cell.displayNameLabel.text = xpostAutocomplete.siteURL.absoluteString;
+        cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+        cell.avatarImageView.image = [UIImage imageNamed:@"gravatar"];
+    }
 
     return cell;
 }
@@ -349,15 +367,21 @@ CGFloat const STVSeparatorHeight = 1.f;
 {
     // only reload if the suggestion list is updated for the current site
     if (self.siteID && [notification.object isEqualToNumber:self.siteID]) {
-        self.suggestions = [[SuggestionService sharedInstance] suggestionsForSiteID:self.siteID];
+//        self.suggestions = [[SuggestionService sharedInstance] suggestionsForSiteID:self.siteID];
+        self.suggestions = [[XPostSuggestionService shared] autocompletes];
         [self showSuggestionsForWord:self.searchText];
+    } else {
+        self.suggestions = [[XPostSuggestionService shared] autocompletes];
     }
 }
 
 - (NSArray *)suggestions
 {
     if (!_suggestions && _siteID != nil) {
-        _suggestions = [[SuggestionService sharedInstance] suggestionsForSiteID:self.siteID];
+        //_suggestions = [[SuggestionService sharedInstance] suggestionsForSiteID:self.siteID];
+        _suggestions = [[XPostSuggestionService shared] authenticatedRequestSuggestionsFor:self.blog];
+    } else {
+
     }
     return _suggestions;
 }

@@ -1480,6 +1480,7 @@
 		A0E293F10E21027E00C6919C /* WPAddPostCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E293F00E21027E00C6919C /* WPAddPostCategoryViewController.m */; };
 		ACBAB5FE0E121C7300F38795 /* PostSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACBAB5FD0E121C7300F38795 /* PostSettingsViewController.m */; };
 		ADF544C2195A0F620092213D /* CustomHighlightButton.m in Sources */ = {isa = PBXBuildFile; fileRef = ADF544C1195A0F620092213D /* CustomHighlightButton.m */; };
+		B093058B2507D402002083A6 /* XPostSuggestionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B093058A2507D402002083A6 /* XPostSuggestionService.swift */; };
 		B095DE0E24F4A0E2006BBA2C /* Autocompleter+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B095DE0A24F4A0E2006BBA2C /* Autocompleter+CoreDataClass.swift */; };
 		B095DE0F24F4A0E2006BBA2C /* Autocompleter+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B095DE0B24F4A0E2006BBA2C /* Autocompleter+CoreDataProperties.swift */; };
 		B095DE1024F4A0E2006BBA2C /* UserAutocomplete+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B095DE0C24F4A0E2006BBA2C /* UserAutocomplete+CoreDataClass.swift */; };
@@ -4014,6 +4015,7 @@
 		ACBAB5FD0E121C7300F38795 /* PostSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostSettingsViewController.m; sourceTree = "<group>"; usesTabs = 0; };
 		ADF544C0195A0F620092213D /* CustomHighlightButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomHighlightButton.h; sourceTree = "<group>"; };
 		ADF544C1195A0F620092213D /* CustomHighlightButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomHighlightButton.m; sourceTree = "<group>"; };
+		B093058A2507D402002083A6 /* XPostSuggestionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XPostSuggestionService.swift; sourceTree = "<group>"; };
 		B095DE0924F49DEF006BBA2C /* WordPress 99.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WordPress 99.xcdatamodel"; sourceTree = "<group>"; };
 		B095DE0A24F4A0E2006BBA2C /* Autocompleter+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Autocompleter+CoreDataClass.swift"; path = "../../../Autocompleter+CoreDataClass.swift"; sourceTree = "<group>"; };
 		B095DE0B24F4A0E2006BBA2C /* Autocompleter+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Autocompleter+CoreDataProperties.swift"; path = "../../../Autocompleter+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -8226,6 +8228,7 @@
 				57D66B99234BB206005A2D74 /* PostServiceRemoteFactory.swift */,
 				8BC12F732320181E004DDA72 /* PostService+MarkAsFailedAndDraftIfNeeded.swift */,
 				4631359024AD013F0017E65C /* PageCoordinator.swift */,
+				B093058A2507D402002083A6 /* XPostSuggestionService.swift */,
 				46E327D524E71B2F000944B3 /* Page Layouts */,
 			);
 			path = Services;
@@ -12350,6 +12353,7 @@
 				9A162F2521C26F5F00FDC035 /* UIViewController+ChildViewController.swift in Sources */,
 				086C4D101E81F9240011D960 /* Media+Blog.swift in Sources */,
 				08216FCB1CDBF96000304BA7 /* MenuItemEditingHeaderView.m in Sources */,
+				B093058B2507D402002083A6 /* XPostSuggestionService.swift in Sources */,
 				17BD4A0820F76A4700975AC3 /* Routes+Banners.swift in Sources */,
 				1702BBDC1CEDEA6B00766A33 /* BadgeLabel.swift in Sources */,
 				F5B9152124465FB400179876 /* ReaderTagsTableViewController.swift in Sources */,

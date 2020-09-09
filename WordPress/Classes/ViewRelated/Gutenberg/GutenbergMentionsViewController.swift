@@ -4,6 +4,7 @@ import UIKit
 public class GutenbergMentionsViewController: UIViewController {
 
     static let mentionTriggerText = String("@")
+    static let xpostTriggerText = String("+")
     static let minimumHeaderHeight = CGFloat(50)
 
     public lazy var backgroundView: UIView = {
@@ -40,16 +41,16 @@ public class GutenbergMentionsViewController: UIViewController {
         suggestionsView.showSuggestions(forWord: Self.mentionTriggerText)
         suggestionsView.suggestionsDelegate = self
         suggestionsView.translatesAutoresizingMaskIntoConstraints = false
-        suggestionsView.siteID = siteID
+        suggestionsView.siteID = blog.dotComID
         suggestionsView.useTransparentHeader = false
         return suggestionsView
     }()
 
-    private let siteID: NSNumber
+    private let blog: Blog
     public var onCompletion: ((Result<String, NSError>) -> Void)?
 
-    public init(siteID: NSNumber) {
-        self.siteID = siteID
+    public init(blog: Blog) {
+        self.blog = blog
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -98,6 +99,8 @@ public class GutenbergMentionsViewController: UIViewController {
         ])
 
         view.setNeedsUpdateConstraints()
+
+        suggestionsView.blog = blog
     }
 
     override public func viewDidAppear(_ animated: Bool) {

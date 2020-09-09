@@ -1,9 +1,11 @@
 #import <UIKit/UIKit.h>
+#import "Blog.h"
 
 @protocol SuggestionsTableViewDelegate;
 
 @interface SuggestionsTableView : UIView <UITableViewDataSource, UITableViewDelegate>
 
+@property (nonatomic, strong) Blog *blog;
 @property (nonatomic, nullable, weak) id <SuggestionsTableViewDelegate> suggestionsDelegate;
 @property (nonatomic, nullable, strong) NSNumber *siteID;
 @property (nonatomic) BOOL useTransparentHeader;
