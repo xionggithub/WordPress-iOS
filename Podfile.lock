@@ -418,7 +418,7 @@ PODS:
   - WordPressShared (1.12.0):
     - CocoaLumberjack (~> 3.4)
     - FormatterKit/TimeIntervalFormatter (= 1.8.2)
-  - WordPressUI (1.7.1)
+  - WordPressUI (1.7.2-beta.1)
   - WPMediaPicker (1.7.0)
   - wpxmlrpc (0.8.5)
   - Yoga (1.14.0)
@@ -509,7 +509,7 @@ DEPENDENCIES:
   - WordPressKit (~> 4.17.0)
   - WordPressMocks (~> 0.0.8)
   - WordPressShared (~> 1.12.0)
-  - WordPressUI (~> 1.7.1)
+  - WordPressUI (from `https://github.com/wordpress-mobile/WordPressUI-iOS`, branch `wcios-2740/bottom-sheet-source-bar-button-item`)
   - WPMediaPicker (~> 1.7.0)
   - Yoga (from `https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.37.1/third-party-podspecs/Yoga.podspec.json`)
   - ZendeskSupportSDK (= 5.0.0)
@@ -559,7 +559,6 @@ SPEC REPOS:
     - WordPressKit
     - WordPressMocks
     - WordPressShared
-    - WordPressUI
     - WPMediaPicker
     - wpxmlrpc
     - ZendeskCommonUISDK
@@ -657,6 +656,9 @@ EXTERNAL SOURCES:
     :git: http://github.com/wordpress-mobile/gutenberg-mobile/
     :submodules: true
     :tag: v1.37.1
+  WordPressUI:
+    :branch: wcios-2740/bottom-sheet-source-bar-button-item
+    :git: https://github.com/wordpress-mobile/WordPressUI-iOS
   Yoga:
     :podspec: https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.37.1/third-party-podspecs/Yoga.podspec.json
 
@@ -675,6 +677,9 @@ CHECKOUT OPTIONS:
     :git: http://github.com/wordpress-mobile/gutenberg-mobile/
     :submodules: true
     :tag: v1.37.1
+  WordPressUI:
+    :commit: 70ad07443eee9acc5ed3c6ea8445c5e07c9de3f2
+    :git: https://github.com/wordpress-mobile/WordPressUI-iOS
 
 SPEC CHECKSUMS:
   1PasswordExtension: f97cc80ae58053c331b2b6dc8843ba7103b33794
@@ -741,7 +746,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: 20deb1f6f001000d1f2603722ec110c66c74796b
   ReactCommon: 48926fc48fcd7c8a629860049ffba9c23b4005dc
   ReactNativeDarkMode: f61376360c5d983907e5c316e8e1c853a8c2f348
-  RNCMaskedView: a0573378f8780b70defa6094a448af7e2876f48c
+  RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNGestureHandler: 82a89b0fde0a37e633c6233418f7249e2f8e59b5
   RNReanimated: 13f7a6a22667c4f00aac217bc66f94e8560b3d59
   RNScreens: 6833ac5c29cf2f03eed12103140530bbd75b6aea
@@ -759,7 +764,7 @@ SPEC CHECKSUMS:
   WordPressKit: f1a9e32cf7f46f7eb19d944591aad88b108d90e7
   WordPressMocks: b4064b99a073117bbc304abe82df78f2fbe60992
   WordPressShared: 38cb62e9cb998d4dc3c1611f17934c6875a6b3e8
-  WordPressUI: 9da5d966b8beb091950cd96880db398d7f30e246
+  WordPressUI: 1765e695563562da513b0dd5ddb95dcf59d9f604
   WPMediaPicker: 754bc043ea42abc2eae8a07e5680c777c112666a
   wpxmlrpc: 6a9bdd6ab9d1b159b384b0df0f3f39de9af4fecf
   Yoga: c920bf12bf8146aa5cd118063378c2cf5682d16c
@@ -772,6 +777,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: a87ab1e4badace92c75eb11dc77ede1e995b2adc
   ZIPFoundation: 249fa8890597086cd536bb2df5c9804d84e122b0
 
-PODFILE CHECKSUM: bb31990484894ab7b3220c329e8be1c378adeaa3
+PODFILE CHECKSUM: 6364c86ecd73dd877e9c4e7eef103328c3f2e8fb
 
 COCOAPODS: 1.9.3
