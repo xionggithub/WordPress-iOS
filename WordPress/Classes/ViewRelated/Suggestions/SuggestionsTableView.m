@@ -244,14 +244,12 @@ CGFloat const STVSeparatorHeight = 1.f;
 
             switch (self.suggestionType) {
                 case SuggestionTypeUser:
-                    predicate = [NSPredicate predicateWithFormat:@"(username contains[c] %@) OR (displayName contains[c] %@)",
+                    predicate = [NSPredicate predicateWithFormat:@"(displayName contains[c] %@) OR (username contains[c] %@)",
                                                     searchQuery, searchQuery];
                     break;
                 case SuggestionTypeSite:
                     predicate = [NSPredicate predicateWithFormat:@"(title contains[c] %@) OR (siteURL.absoluteString contains[c] %@)",
                                                     searchQuery, searchQuery];
-                    break;
-                default:
                     break;
             }
 
@@ -320,33 +318,33 @@ CGFloat const STVSeparatorHeight = 1.f;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
-    
-//    UserSuggestion *suggestion = [self.searchResults objectAtIndex:indexPath.row];
-//    cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", suggestion.username];
-//    cell.displayNameLabel.text = suggestion.displayName;
-//    cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-//    cell.avatarImageView.image = [UIImage imageNamed:@"gravatar"];
-//    cell.imageDownloadHash = suggestion.imageURL.hash;
-//    [self loadAvatarForSuggestion:suggestion success:^(UIImage *image) {
-//        if (indexPath.row >= self.searchResults.count) {
-//            return;
-//        }
-//
-//        UserSuggestion *reloaded = [self.searchResults objectAtIndex:indexPath.row];
-//        if (cell.imageDownloadHash != reloaded.imageURL.hash) {
-//            return;
-//        }
-//
-//        cell.avatarImageView.image = image;
-//    }];
 
-    SiteSuggestion *suggestion = [self.searchResults objectAtIndex:indexPath.row];
-    cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", suggestion.title];
-    cell.displayNameLabel.text = suggestion.siteURL.absoluteString;
     cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-    cell.avatarImageView.image = [UIImage imageNamed:@"gravatar"];
-    cell.imageDownloadHash = suggestion.blavatarURL.hash;
-    [self loadAvatarFor:suggestion.blavatarURL success:^(UIImage *image) {
+
+    NSURL *imageURL;
+
+    switch (self.suggestionType) {
+        case SuggestionTypeUser: {
+            UserSuggestion *suggestion = [self.searchResults objectAtIndex:indexPath.row];
+            cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", suggestion.username];
+            cell.displayNameLabel.text = suggestion.displayName;
+            cell.avatarImageView.image = [UIImage imageNamed:@"gravatar"];
+            imageURL = suggestion.imageURL;
+            break;
+        }
+        case SuggestionTypeSite: {
+            SiteSuggestion *suggestion = [self.searchResults objectAtIndex:indexPath.row];
+            cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", suggestion.title];
+            cell.displayNameLabel.text = suggestion.siteURL.absoluteString;
+            cell.avatarImageView.image = [UIImage imageNamed:@"gravatar"];
+            imageURL = suggestion.blavatarURL;
+            break;
+        }
+        default:break;
+    }
+
+    cell.imageDownloadHash = imageURL.hash;
+    [self loadAvatarFor:imageURL success:^(UIImage *image) {
         if (indexPath.row >= self.searchResults.count) {
             return;
         }
@@ -377,16 +375,24 @@ CGFloat const STVSeparatorHeight = 1.f;
 - (NSArray *)suggestions
 {
     if (!_suggestions && _siteID != nil) {
-//        [self suggestionsFor:self.siteID completion:^(NSArray<UserSuggestion *> * _Nullable results) {
-//            if (!results) return;
-//            self.suggestions = results;
-//            [self showSuggestionsForWord:self.searchText];
-//        }];
-        [self siteSuggestionsFor:self.siteID completion:^(NSArray<SiteSuggestion *> * _Nullable results) {
-            if (!results) return;
-            self.suggestions = results;
-            [self showSuggestionsForWord:self.searchText];
-        }];
+        switch (self.suggestionType) {
+            case SuggestionTypeUser: {
+                [self suggestionsFor:self.siteID completion:^(NSArray<UserSuggestion *> * _Nullable results) {
+                    if (!results) return;
+                    self.suggestions = results;
+                    [self showSuggestionsForWord:self.searchText];
+                }];
+                break;
+            }
+            case SuggestionTypeSite: {
+                [self siteSuggestionsFor:self.siteID completion:^(NSArray<SiteSuggestion *> * _Nullable results) {
+                    if (!results) return;
+                    self.suggestions = results;
+                    [self showSuggestionsForWord:self.searchText];
+                }];
+                break;
+            }
+        }
     }
     return _suggestions;
 }
