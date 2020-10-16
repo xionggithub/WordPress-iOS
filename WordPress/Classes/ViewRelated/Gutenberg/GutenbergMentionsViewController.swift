@@ -4,6 +4,7 @@ import UIKit
 public class GutenbergMentionsViewController: UIViewController {
 
     static let mentionTriggerText = String("@")
+    static let crosspostTriggerText = String("+")
     static let minimumHeaderHeight = CGFloat(50)
 
     public lazy var backgroundView: UIView = {
@@ -24,7 +25,7 @@ public class GutenbergMentionsViewController: UIViewController {
     public lazy var searchView: UITextField = {
         let textField = UITextField(frame: CGRect.zero)
         textField.placeholder = NSLocalizedString("Search users...", comment: "Placeholder message when showing mentions search field")
-        textField.text = Self.mentionTriggerText
+        textField.text = Self.crosspostTriggerText
         textField.clearButtonMode = .whileEditing
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
@@ -37,7 +38,7 @@ public class GutenbergMentionsViewController: UIViewController {
         suggestionsView.animateWithKeyboard = false
         suggestionsView.enabled = true
         suggestionsView.showLoading = true
-        suggestionsView.showSuggestions(forWord: Self.mentionTriggerText)
+        suggestionsView.showSuggestions(forWord: Self.crosspostTriggerText)
         suggestionsView.suggestionsDelegate = self
         suggestionsView.translatesAutoresizingMaskIntoConstraints = false
         suggestionsView.siteID = siteID
@@ -118,6 +119,8 @@ extension GutenbergMentionsViewController: UITextFieldDelegate {
         }
         let searchWord = nsString.replacingCharacters(in: range, with: string)
         if searchWord.hasPrefix(Self.mentionTriggerText) {
+            suggestionsView.showSuggestions(forWord: searchWord)
+        } else if searchWord.hasPrefix(Self.crosspostTriggerText) {
             suggestionsView.showSuggestions(forWord: searchWord)
         } else {
             // We are dispatching this async to allow this delegate to finish and process the keypress before executing the cancelation.
