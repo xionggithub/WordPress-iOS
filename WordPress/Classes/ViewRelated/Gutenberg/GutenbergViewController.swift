@@ -387,7 +387,7 @@ class GutenbergViewController: UIViewController, PostEditor {
     private var keyboardShowObserver: Any?
     private var keyboardHideObserver: Any?
     private var keyboardFrame = CGRect.zero
-    private var mentionsBottomConstraint: NSLayoutConstraint?
+    private var suggestionViewBottomConstraint: NSLayoutConstraint?
     private var previousFirstResponder: UIView?
 
     private func setupKeyboardObservers() {
@@ -835,23 +835,29 @@ extension GutenbergViewController: GutenbergBridgeDelegate {
     func updateConstraintsToAvoidKeyboard(frame: CGRect) {
         keyboardFrame = frame
         let minimumKeyboardHeight = CGFloat(50)
-        guard let mentionsBottomConstraint = mentionsBottomConstraint else {
+        guard let suggestionViewBottomConstraint = suggestionViewBottomConstraint else {
             return
         }
 
         // There are cases where the keyboard is not visible, but the system instead of returning zero, returns a low number, for example: 0, 3, 69.
         // So in those scenarios, we just need to take in account the safe area and ignore the keyboard all together.
         if keyboardFrame.height < minimumKeyboardHeight {
-            mentionsBottomConstraint.constant = -self.view.safeAreaInsets.bottom
+            suggestionViewBottomConstraint.constant = -self.view.safeAreaInsets.bottom
         }
         else {
-            mentionsBottomConstraint.constant = -self.keyboardFrame.height
+            suggestionViewBottomConstraint.constant = -self.keyboardFrame.height
         }
     }
 
     func gutenbergDidRequestMention(callback: @escaping (Swift.Result<String, NSError>) -> Void) {
         DispatchQueue.main.async(execute: { [weak self] in
-            self?.mentionShow(callback: callback)
+            self?.showSuggestions(type: SuggestionType.user, callback: callback)
+        })
+    }
+
+    func gutenbergDidRequestXpost(callback: @escaping (Swift.Result<String, NSError>) -> Void) {
+        DispatchQueue.main.async(execute: { [weak self] in
+            self?.showSuggestions(type: SuggestionType.site, callback: callback)
         })
     }
 
@@ -875,16 +881,21 @@ extension GutenbergViewController: GutenbergBridgeDelegate {
 
 extension GutenbergViewController {
 
-    private func mentionShow(callback: @escaping (Swift.Result<String, NSError>) -> Void) {
-        guard let siteID = post.blog.dotComID,
-              let blog = SuggestionService.shared.persistedBlog(for: siteID),
-              SuggestionService.shared.shouldShowSuggestions(for: blog) else {
-            callback(.failure(GutenbergMentionsViewController.MentionError.notAvailable as NSError))
+    private func showSuggestions(type: SuggestionType, callback: @escaping (Swift.Result<String, NSError>) -> Void) {
+        guard let siteID = post.blog.dotComID, let blog = SuggestionService.shared.persistedBlog(for: siteID) else {
+            callback(.failure(GutenbergSuggestionsViewController.SuggestionError.notAvailable as NSError))
             return
         }
 
+        switch type {
+        case .user:
+            guard SuggestionService.shared.shouldShowSuggestions(for: blog) else { return }
+        case .site:
+            break
+        }
+
         previousFirstResponder = view.findFirstResponder()
-        let mentionsController = GutenbergMentionsViewController(siteID: siteID)
+        let mentionsController = GutenbergSuggestionsViewController(siteID: siteID, suggestionType: .user)
         mentionsController.onCompletion = { (result) in
             callback(result)
             mentionsController.view.removeFromSuperview()
@@ -902,7 +913,7 @@ extension GutenbergViewController {
             mentionsBottomConstraint,
             mentionsController.view.topAnchor.constraint(equalTo: view.safeTopAnchor)
         ])
-        self.mentionsBottomConstraint = mentionsBottomConstraint
+        self.suggestionViewBottomConstraint = mentionsBottomConstraint
         updateConstraintsToAvoidKeyboard(frame: keyboardFrame)
         mentionsController.didMove(toParent: self)
     }

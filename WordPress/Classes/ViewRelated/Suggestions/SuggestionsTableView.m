@@ -10,7 +10,6 @@ CGFloat const STVSeparatorHeight = 1.f;
 
 @interface SuggestionsTableView ()
 
-@property (nonatomic, assign) SuggestionType suggestionType;
 @property (nonatomic, strong) UIView *headerView;
 @property (nonatomic, strong) UIView *separatorView;
 @property (nonatomic, strong) UITableView *tableView;
@@ -26,10 +25,12 @@ CGFloat const STVSeparatorHeight = 1.f;
 
 #pragma mark Public methods
 
-- (instancetype)init
-{    
+- (instancetype)init:(NSNumber *)siteID suggestionType:(SuggestionType)suggestionType
+{
     self = [super initWithFrame:CGRectZero];
     if (self) {
+        _siteID = siteID;
+        _suggestionType = suggestionType;
         _searchText = @"";
         _enabled = YES;
         _searchResults = [[NSMutableArray alloc] init];

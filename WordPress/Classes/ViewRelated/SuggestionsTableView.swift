@@ -5,11 +5,21 @@ import Foundation
     case site
 }
 
+extension SuggestionType {
+    var trigger: String {
+        switch self {
+        case .user: return "@"
+        case .site: return "+"
+        }
+    }
+}
+
 @objc public extension SuggestionsTableView {
 
-    convenience init(suggestionType: SuggestionType) {
-        self.init()
-    }
+//    convenience init(siteID: NSNumber, suggestionType: SuggestionType) {
+//        self.sugg
+//        self.init(siteID: siteID, suggestionType: suggestionType)
+//    }
 
     func suggestions(for siteID: NSNumber, completion: @escaping ([UserSuggestion]?) -> Void) {
         guard let blog = SuggestionService.shared.persistedBlog(for: siteID) else { return }

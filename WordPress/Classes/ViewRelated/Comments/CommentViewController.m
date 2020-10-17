@@ -104,8 +104,7 @@ typedef NS_ENUM(NSUInteger, CommentsDetailsRow) {
         return;
     }
     
-    self.suggestionsTableView = [SuggestionsTableView new];
-    self.suggestionsTableView.siteID = self.comment.blog.dotComID;
+    self.suggestionsTableView = [[SuggestionsTableView alloc] initWithSiteID:self.comment.blog.dotComID suggestionType:SuggestionTypeUser];
     self.suggestionsTableView.suggestionsDelegate = self;
     [self.suggestionsTableView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.view addSubview:self.suggestionsTableView];
