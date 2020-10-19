@@ -1520,7 +1520,6 @@
 		B0AC50DD251E96270039E022 /* ReaderCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AC50DC251E96270039E022 /* ReaderCommentsViewController.swift */; };
 		B0B68A9C252FA91E0001B28C /* UserSuggestion+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B68A9A252FA91E0001B28C /* UserSuggestion+CoreDataClass.swift */; };
 		B0B68A9D252FA91E0001B28C /* UserSuggestion+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B68A9B252FA91E0001B28C /* UserSuggestion+CoreDataProperties.swift */; };
-		B0DDC343252F9279002BAFB3 /* UserSuggestion+ImageHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DDC342252F9279002BAFB3 /* UserSuggestion+ImageHelpers.swift */; };
 		B5015C581D4FDBB300C9449E /* NotificationActionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5015C571D4FDBB300C9449E /* NotificationActionsService.swift */; };
 		B50248AF1C96FF6200AFBDED /* WPStyleGuide+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50248AE1C96FF6200AFBDED /* WPStyleGuide+Share.swift */; };
 		B50248C21C96FFCC00AFBDED /* WordPressShare-Lumberjack.m in Sources */ = {isa = PBXBuildFile; fileRef = B50248BC1C96FFCC00AFBDED /* WordPressShare-Lumberjack.m */; };
@@ -4097,7 +4096,6 @@
 		B0B68A9A252FA91E0001B28C /* UserSuggestion+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserSuggestion+CoreDataClass.swift"; sourceTree = "<group>"; };
 		B0B68A9B252FA91E0001B28C /* UserSuggestion+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserSuggestion+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B0DDC2EB252F7C4F002BAFB3 /* WordPress 100.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WordPress 100.xcdatamodel"; sourceTree = "<group>"; };
-		B0DDC342252F9279002BAFB3 /* UserSuggestion+ImageHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserSuggestion+ImageHelpers.swift"; sourceTree = "<group>"; };
 		B5015C571D4FDBB300C9449E /* NotificationActionsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationActionsService.swift; sourceTree = "<group>"; };
 		B50248AE1C96FF6200AFBDED /* WPStyleGuide+Share.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "WPStyleGuide+Share.swift"; path = "WordPressShareExtension/WPStyleGuide+Share.swift"; sourceTree = SOURCE_ROOT; };
 		B50248B81C96FFB000AFBDED /* WordPressShare-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "WordPressShare-Bridging-Header.h"; path = "WordPressShareExtension/WordPressShare-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
@@ -5753,7 +5751,7 @@
 			path = GutenbergWeb;
 			sourceTree = "<group>";
 		};
-		29B97314FDCFA39411CA2CEA = {
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
 				98D31BBF239720E4009CFF43 /* MainInterface.storyboard */,
@@ -5919,7 +5917,6 @@
 				8B1CF0102433E61C00578582 /* AbstractPost+TitleForVisibility.swift */,
 				B0B68A9A252FA91E0001B28C /* UserSuggestion+CoreDataClass.swift */,
 				B0B68A9B252FA91E0001B28C /* UserSuggestion+CoreDataProperties.swift */,
-				B0DDC342252F9279002BAFB3 /* UserSuggestion+ImageHelpers.swift */,
 				5D42A3D8175E7452005CFF05 /* BasePost.h */,
 				5D42A3D9175E7452005CFF05 /* BasePost.m */,
 				E19B17AD1E5C6944007517C6 /* BasePost.swift */,
@@ -11335,7 +11332,7 @@
 				bg,
 				sk,
 			);
-			mainGroup = 29B97314FDCFA39411CA2CEA;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -13054,7 +13051,6 @@
 				2F161B0622CC2DC70066A5C5 /* LoadingStatusView.swift in Sources */,
 				080C44A91CE14A9F00B3A02F /* MenuDetailsViewController.m in Sources */,
 				2FA6511B21F26A57009AA935 /* InlineErrorRetryTableViewCell.swift in Sources */,
-				B0DDC343252F9279002BAFB3 /* UserSuggestion+ImageHelpers.swift in Sources */,
 				08216FCF1CDBF96000304BA7 /* MenuItemSourceCell.m in Sources */,
 				462F4E0A18369F0B0028D2F8 /* BlogDetailsViewController.m in Sources */,
 				3FCCAA1523F4A1A3004064C0 /* UIBarButtonItem+MeBarButton.swift in Sources */,
