@@ -851,13 +851,13 @@ extension GutenbergViewController: GutenbergBridgeDelegate {
 
     func gutenbergDidRequestMention(callback: @escaping (Swift.Result<String, NSError>) -> Void) {
         DispatchQueue.main.async(execute: { [weak self] in
-            self?.showSuggestions(type: SuggestionType.user, callback: callback)
+            self?.showSuggestions(type: .user, callback: callback)
         })
     }
 
     func gutenbergDidRequestXpost(callback: @escaping (Swift.Result<String, NSError>) -> Void) {
         DispatchQueue.main.async(execute: { [weak self] in
-            self?.showSuggestions(type: SuggestionType.site, callback: callback)
+            self?.showSuggestions(type: .site, callback: callback)
         })
     }
 
@@ -895,7 +895,7 @@ extension GutenbergViewController {
         }
 
         previousFirstResponder = view.findFirstResponder()
-        let mentionsController = GutenbergSuggestionsViewController(siteID: siteID, suggestionType: .user)
+        let mentionsController = GutenbergSuggestionsViewController(siteID: siteID, suggestionType: type)
         mentionsController.onCompletion = { (result) in
             callback(result)
             mentionsController.view.removeFromSuperview()

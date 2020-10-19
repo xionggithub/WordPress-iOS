@@ -13,9 +13,6 @@ CGFloat const STVSeparatorHeight = 1.f;
 @property (nonatomic, strong) UIView *headerView;
 @property (nonatomic, strong) UIView *separatorView;
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSArray *suggestions;
-@property (nonatomic, strong) NSString *searchText;
-@property (nonatomic, strong) NSMutableArray *searchResults;
 @property (nonatomic, strong) NSLayoutConstraint *headerMinimumHeightConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *heightConstraint;
 
@@ -25,12 +22,15 @@ CGFloat const STVSeparatorHeight = 1.f;
 
 #pragma mark Public methods
 
-- (instancetype)init:(NSNumber *)siteID suggestionType:(SuggestionType)suggestionType
+- (instancetype)initWithSiteID:(NSNumber *)siteID
+                suggestionType:(SuggestionType)suggestionType
+                      delegate:(id <SuggestionsTableViewDelegate>)suggestionsDelegate
 {
     self = [super initWithFrame:CGRectZero];
     if (self) {
         _siteID = siteID;
         _suggestionType = suggestionType;
+        _suggestionsDelegate = suggestionsDelegate;
         _searchText = @"";
         _enabled = YES;
         _searchResults = [[NSMutableArray alloc] init];
@@ -101,7 +101,7 @@ CGFloat const STVSeparatorHeight = 1.f;
 {
     // Pin the table view to the view's edges
     NSDictionary *views = @{@"headerview": self.headerView,
-                        @"separatorview" : self.separatorView,
+                         @"separatorview": self.separatorView,
                              @"tableview": self.tableView };
     NSDictionary *metrics = @{@"separatorheight" : @(STVSeparatorHeight)};
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[headerview]|"
@@ -240,20 +240,7 @@ CGFloat const STVSeparatorHeight = 1.f;
         self.searchText = word;
         if (self.searchText.length > 1) {
             NSString *searchQuery = [word substringFromIndex:1];
-
-            NSPredicate *predicate;
-
-            switch (self.suggestionType) {
-                case SuggestionTypeUser:
-                    predicate = [NSPredicate predicateWithFormat:@"(displayName contains[c] %@) OR (username contains[c] %@)",
-                                                    searchQuery, searchQuery];
-                    break;
-                case SuggestionTypeSite:
-                    predicate = [NSPredicate predicateWithFormat:@"(title contains[c] %@) OR (siteURL.absoluteString contains[c] %@)",
-                                                    searchQuery, searchQuery];
-                    break;
-            }
-
+            NSPredicate *predicate = [self predicateFor: searchQuery];
             self.searchResults = [[self.suggestions filteredArrayUsingPredicate:predicate] mutableCopy];
         } else {
             self.searchResults = [self.suggestions mutableCopy];
@@ -313,62 +300,20 @@ CGFloat const STVSeparatorHeight = 1.f;
                                                                 forIndexPath:indexPath];
     
     if (!self.suggestions) {
-        cell.usernameLabel.text = NSLocalizedString(@"Loading...", @"Suggestions loading message");
-        cell.displayNameLabel.text = nil;
-        [cell.avatarImageView setImage:nil];
+        cell.titleLabel.text = NSLocalizedString(@"Loading...", @"Suggestions loading message");
+        cell.subtitleLabel.text = nil;
+        [cell.iconImageView setImage:nil];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
 
     cell.selectionStyle = UITableViewCellSelectionStyleDefault;
 
-    NSURL *imageURL;
-
-    switch (self.suggestionType) {
-        case SuggestionTypeUser: {
-            UserSuggestion *suggestion = [self.searchResults objectAtIndex:indexPath.row];
-            cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", suggestion.username];
-            cell.displayNameLabel.text = suggestion.displayName;
-            cell.avatarImageView.image = [UIImage imageNamed:@"gravatar"];
-            imageURL = suggestion.imageURL;
-            break;
-        }
-        case SuggestionTypeSite: {
-            SiteSuggestion *suggestion = [self.searchResults objectAtIndex:indexPath.row];
-            cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", suggestion.title];
-            cell.displayNameLabel.text = suggestion.siteURL.absoluteString;
-            cell.avatarImageView.image = [UIImage imageNamed:@"gravatar"];
-            imageURL = suggestion.blavatarURL;
-            break;
-        }
-        default:break;
-    }
-
-    cell.imageDownloadHash = imageURL.hash;
-    [self loadAvatarFor:imageURL success:^(UIImage *image) {
-        if (indexPath.row >= self.searchResults.count) {
-            return;
-        }
-
-        SiteSuggestion *reloaded = [self.searchResults objectAtIndex:indexPath.row];
-        if (cell.imageDownloadHash != reloaded.blavatarURL.hash) {
-            return;
-        }
-
-        cell.avatarImageView.image = image;
-    }];
-
+    id suggestion = [self.searchResults objectAtIndex:indexPath.row];
+    cell.titleLabel.text = [self titleFor:suggestion];
+    cell.subtitleLabel.text = [self subtitleFor:suggestion];
+    [self loadImageFor:suggestion in:cell at: indexPath];
     return cell;
-}
-
-#pragma mark - UITableViewDelegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    SiteSuggestion *suggestion = [self.searchResults objectAtIndex:indexPath.row];
-    [self.suggestionsDelegate suggestionsTableView:self
-                               didSelectSuggestion:suggestion.title
-                                     forSearchText:[self.searchText substringFromIndex:1]];
 }
 
 #pragma mark - Suggestion list management
@@ -376,24 +321,7 @@ CGFloat const STVSeparatorHeight = 1.f;
 - (NSArray *)suggestions
 {
     if (!_suggestions && _siteID != nil) {
-        switch (self.suggestionType) {
-            case SuggestionTypeUser: {
-                [self suggestionsFor:self.siteID completion:^(NSArray<UserSuggestion *> * _Nullable results) {
-                    if (!results) return;
-                    self.suggestions = results;
-                    [self showSuggestionsForWord:self.searchText];
-                }];
-                break;
-            }
-            case SuggestionTypeSite: {
-                [self siteSuggestionsFor:self.siteID completion:^(NSArray<SiteSuggestion *> * _Nullable results) {
-                    if (!results) return;
-                    self.suggestions = results;
-                    [self showSuggestionsForWord:self.searchText];
-                }];
-                break;
-            }
-        }
+        [self fetchSuggestionFor: _siteID];
     }
     return _suggestions;
 }

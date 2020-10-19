@@ -1,19 +1,27 @@
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSInteger, SuggestionType);
+typedef NS_ENUM(NSUInteger, SuggestionType) {
+    SuggestionTypeUser,
+    SuggestionTypeSite
+};
 
 @protocol SuggestionsTableViewDelegate;
 
-@interface SuggestionsTableView : UIView <UITableViewDataSource, UITableViewDelegate>
+@interface SuggestionsTableView : UIView <UITableViewDataSource>
 
+@property (nonatomic, nullable, weak) id <SuggestionsTableViewDelegate> suggestionsDelegate;
 @property (nonatomic, nullable, strong) NSNumber *siteID;
 @property (nonatomic, assign) SuggestionType suggestionType;
-@property (nonatomic, nullable, weak) id <SuggestionsTableViewDelegate> suggestionsDelegate;
+@property (nonatomic, strong) NSMutableArray *searchResults;
+@property (nonatomic, strong) NSArray *suggestions;
+@property (nonatomic, strong) NSString *searchText;
 @property (nonatomic) BOOL useTransparentHeader;
 @property (nonatomic) BOOL animateWithKeyboard;
 @property (nonatomic) BOOL showLoading;
 
-- (instancetype _Nonnull )init:(nonnull NSNumber *)siteID suggestionType:(SuggestionType)suggestionType NS_DESIGNATED_INITIALIZER;
+- (_Nonnull instancetype)initWithSiteID:(NSNumber *_Nullable)siteID
+                         suggestionType:(SuggestionType)suggestionType
+                               delegate:(id <SuggestionsTableViewDelegate>_Nonnull)suggestionsDelegate NS_DESIGNATED_INITIALIZER;
 
 /**
   Enables or disables the SuggestionsTableView component.

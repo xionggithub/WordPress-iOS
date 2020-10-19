@@ -32,11 +32,10 @@ public class GutenbergSuggestionsViewController: UIViewController {
     }()
 
     public lazy var suggestionsView: SuggestionsTableView = {
-        let suggestionsView = SuggestionsTableView(siteID: siteID, suggestionType: .user)
+        let suggestionsView = SuggestionsTableView(siteID: siteID, suggestionType: suggestionType, delegate: self)
         suggestionsView.animateWithKeyboard = false
         suggestionsView.enabled = true
         suggestionsView.showLoading = true
-        suggestionsView.suggestionsDelegate = self
         suggestionsView.translatesAutoresizingMaskIntoConstraints = false
         suggestionsView.useTransparentHeader = false
         return suggestionsView
