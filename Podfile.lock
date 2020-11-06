@@ -21,11 +21,11 @@ PODS:
     - AppCenter/Core
   - AppCenter/Distribute (2.5.1):
     - AppCenter/Core
-  - Automattic-Tracks-iOS (0.5.1):
+  - Automattic-Tracks-iOS (0.7.0):
     - CocoaLumberjack (~> 3)
     - Reachability (~> 3)
     - Sentry (~> 4)
-    - Sodium (~> 0.8.0)
+    - Sodium-Fork (= 0.8.2)
     - UIDeviceIdentifier (~> 1)
   - boost-for-react-native (1.63.0)
   - Charts (3.2.2):
@@ -388,7 +388,7 @@ PODS:
     - Sentry/Core (= 4.5.0)
   - Sentry/Core (4.5.0)
   - SimulatorStatusMagic (2.4.1)
-  - Sodium (0.8.0)
+  - Sodium-Fork (0.8.2)
   - Starscream (3.0.6)
   - SVProgressHUD (2.2.5)
   - UIDeviceIdentifier (1.5.0)
@@ -445,7 +445,7 @@ DEPENDENCIES:
   - AMScrollingNavbar (= 5.6.0)
   - AppCenter (= 2.5.1)
   - AppCenter/Distribute (= 2.5.1)
-  - Automattic-Tracks-iOS (~> 0.5.1)
+  - Automattic-Tracks-iOS (from `https://github.com/Automattic/Automattic-Tracks-iOS.git`, branch `issue/ab_testing`)
   - Charts (~> 3.2.2)
   - CocoaLumberjack (~> 3.0)
   - CropViewController (= 2.5.3)
@@ -525,7 +525,6 @@ SPEC REPOS:
     - AMScrollingNavbar
     - AppAuth
     - AppCenter
-    - Automattic-Tracks-iOS
     - boost-for-react-native
     - Charts
     - CocoaLumberjack
@@ -550,7 +549,7 @@ SPEC REPOS:
     - Reachability
     - Sentry
     - SimulatorStatusMagic
-    - Sodium
+    - Sodium-Fork
     - Starscream
     - SVProgressHUD
     - UIDeviceIdentifier
@@ -573,6 +572,9 @@ SPEC REPOS:
     - ZIPFoundation
 
 EXTERNAL SOURCES:
+  Automattic-Tracks-iOS:
+    :branch: issue/ab_testing
+    :git: https://github.com/Automattic/Automattic-Tracks-iOS.git
   FBLazyVector:
     :podspec: https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.40.0/third-party-podspecs/FBLazyVector.podspec.json
   FBReactNativeSpec:
@@ -662,6 +664,9 @@ EXTERNAL SOURCES:
     :podspec: https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.40.0/third-party-podspecs/Yoga.podspec.json
 
 CHECKOUT OPTIONS:
+  Automattic-Tracks-iOS:
+    :commit: 4ad699c9fa38e89bf6f32eb29744291bf0c82b37
+    :git: https://github.com/Automattic/Automattic-Tracks-iOS.git
   FSInteractiveMap:
     :git: https://github.com/wordpress-mobile/FSInteractiveMap.git
     :tag: 0.2.0
@@ -685,7 +690,7 @@ SPEC CHECKSUMS:
   AMScrollingNavbar: cf0ec5a5ee659d76ba2509f630bf14fba7e16dc3
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   AppCenter: fddcbac6e4baae3d93a196ceb0bfe0e4ce407dec
-  Automattic-Tracks-iOS: ac2cf9d8332fef72cf3e6de7b14012e7a0672676
+  Automattic-Tracks-iOS: 208742591b1cd9abbc8914b37d6ebdb569f22e78
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   Charts: f69cf0518b6d1d62608ca504248f1bbe0b6ae77e
   CocoaLumberjack: 118bf4a820efc641f79fa487b75ed928dccfae23
@@ -750,7 +755,7 @@ SPEC CHECKSUMS:
   RNTAztecView: 690e2b6a2d995ffb7efb9c524a027600f0d51b18
   Sentry: ab6c209f23700d1460691dbc90e19ed0a05d496b
   SimulatorStatusMagic: 28d4a9d1a500ac7cea0b2b5a43c1c6ddb40ba56c
-  Sodium: 63c0ca312a932e6da481689537d4b35568841bdc
+  Sodium-Fork: 45fe3a7c675898ca0635af4eadcb34985477e868
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   UIDeviceIdentifier: a79ccdfc940373835a7d8e9fc7541e6bf61b6319
@@ -773,6 +778,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: dcb2596ad05a63d662e8c7924357babbf327b421
   ZIPFoundation: 249fa8890597086cd536bb2df5c9804d84e122b0
 
-PODFILE CHECKSUM: 8fd22e6297511af0a3db44495f46b5173bea72cb
+PODFILE CHECKSUM: 101255fa2c4229b844d2943d9476038a5bd175f0
 
 COCOAPODS: 1.9.3
