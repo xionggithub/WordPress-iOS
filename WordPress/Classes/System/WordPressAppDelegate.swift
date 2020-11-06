@@ -40,6 +40,28 @@ class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
         return ContextManager.shared.mainContext
     }
 
+    private lazy var abTesting: ExPlat? = {
+        struct WordPressExPlatConfiguration: ExPlatConfiguration {
+            let platform = "calypso"
+
+            var oAuthToken: String? {
+                let accountService = AccountService(managedObjectContext: ContextManager.shared.mainContext)
+                let defaultAccount = accountService.defaultWordPressComAccount()
+                return defaultAccount?.authToken
+            }
+
+            var userAgent: String? {
+                return WPUserAgent.wordPress()
+            }
+
+            var anonId: String? {
+                return UserDefaults.standard.string(forKey: "TracksAnonymousUserID")
+            }
+        }
+
+        return ExPlat(configuration: WordPressExPlatConfiguration())
+    }()
+
     private var shouldRestoreApplicationState = false
     private lazy var uploadsManager: UploadsManager = {
 
@@ -101,6 +123,8 @@ class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         shouldRestoreApplicationState = !isFixingAuthTokenIssue
+
+        abTesting?.refresh()
 
         return true
     }
