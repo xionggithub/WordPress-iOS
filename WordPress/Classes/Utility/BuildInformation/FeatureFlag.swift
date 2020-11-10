@@ -45,7 +45,7 @@ enum FeatureFlag: Int, CaseIterable, OverrideableFlag {
         case .whatIsNew:
             return true
         case .newNavBarAppearance:
-            return false
+            return true
         case .unifiedPrologueCarousel:
             return false
         case .stories:

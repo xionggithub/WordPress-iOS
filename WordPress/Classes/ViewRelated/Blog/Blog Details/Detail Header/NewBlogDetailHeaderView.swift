@@ -1,11 +1,4 @@
-@objc protocol BlogDetailHeaderViewDelegate {
-    func siteIconTapped()
-    func siteIconReceivedDroppedImage(_ image: UIImage?)
-    func siteIconShouldAllowDroppedImages() -> Bool
-    func siteTitleTapped()
-}
-
-class BlogDetailHeaderView: UIView, BlogDetailHeader {
+class NewBlogDetailHeaderView: UIView, BlogDetailHeader {
 
     @objc weak var delegate: BlogDetailHeaderViewDelegate?
 
@@ -94,6 +87,8 @@ class BlogDetailHeaderView: UIView, BlogDetailHeader {
     convenience init(items: [ActionRow.Item]) {
 
         self.init(frame: .zero)
+
+        backgroundColor = .white
 
         siteIconView.tapped = { [weak self] in
             QuickStartTourGuide.find()?.visited(.siteIcon)
