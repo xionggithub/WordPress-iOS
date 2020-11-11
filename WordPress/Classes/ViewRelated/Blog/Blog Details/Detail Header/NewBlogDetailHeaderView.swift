@@ -2,6 +2,12 @@ class NewBlogDetailHeaderView: UIView, BlogDetailHeader {
 
     @objc weak var delegate: BlogDetailHeaderViewDelegate?
 
+    // Temporary method for migrating to NewBlogDetailHeaderView
+    @objc
+    var asView: UIView {
+        return self
+    }
+
     private let titleButton: SpotlightableButton = {
         let button = SpotlightableButton(type: .custom)
         button.titleLabel?.font = WPStyleGuide.fontForTextStyle(.title2, fontWeight: .bold)
@@ -88,6 +94,7 @@ class NewBlogDetailHeaderView: UIView, BlogDetailHeader {
 
         self.init(frame: .zero)
 
+        // Temporary so we can differentiate between this and the old blog details in the PR review.
         backgroundColor = .white
 
         siteIconView.tapped = { [weak self] in

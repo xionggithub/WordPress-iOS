@@ -1,10 +1,14 @@
 import Foundation
 
-/// This is a convenience protocol to make the migration from `BlogDetailHeaderView` to `NewBlogDetailHeaderView` easier.
-/// We should remove this protocol once the migration is complete.
+/// This is a temporary protocol to make the migration from `BlogDetailHeaderView` to `NewBlogDetailHeaderView` easier.
+/// The idea behind this protocol is to make it possible to feature flag the transition.
+/// We will remove this protocol once the migration is complete.
 ///
 @objc
 protocol BlogDetailHeader: NSObjectProtocol {
+
+    @objc
+    var asView: UIView { get }
 
     @objc
     var blog: Blog? { get set }
@@ -17,4 +21,16 @@ protocol BlogDetailHeader: NSObjectProtocol {
 
     @objc
     var blavatarImageView: UIImageView { get }
+
+    @objc
+    func refreshIconImage()
+
+    @objc
+    func refreshSiteTitle()
+
+    @objc
+    func toggleSpotlightOnSiteTitle()
+
+    @objc
+    func toggleSpotlightOnSiteIcon()
 }
