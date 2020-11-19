@@ -131,8 +131,20 @@ def gutenberg_dependencies(options)
     ]
     if options[:path]
         podspec_prefix = options[:path]
+
+        pod 'RNTAztecView', :podspec => "#{podspec_prefix}/packages/react-native-aztec/RNTAztecView.podspec"
     else
         tag_or_commit = options[:tag] || options[:commit]
+        
+        require 'net/http'
+        require 'json'
+        
+        response = Net::HTTP.get(URI("https://api.github.com/repos/wordpress-mobile/gutenberg-mobile/contents/gutenberg?ref=#{tag_or_commit}"))
+        responseJson = JSON.parse(response)
+        sha = responseJson["sha"]
+    
+        pod 'RNTAztecView', :podspec => "https://raw.githubusercontent.com/WordPress/gutenberg/#{sha}/packages/react-native-aztec/RNTAztecView.podspec"
+
         podspec_prefix = "https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/#{tag_or_commit}"
     end
 
