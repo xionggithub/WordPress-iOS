@@ -88,7 +88,16 @@ extension PostEditor where Self: UIViewController {
             }
 
             let previewController: PreviewWebKitViewController
-            if let previewURLString = previewURLString, let previewURL = URL(string: previewURLString) {
+            if let previewURLString = previewURLString, var previewURLComponents = URLComponents(string: previewURLString) {
+                previewURLComponents.queryItems = previewURLComponents.queryItems?.map({ (queryItem) -> URLQueryItem in
+                    if queryItem.name == "preview_id" {
+                        return URLQueryItem(name: "preview_id", value: "\(self.post.postID!.intValue)")
+                    }
+
+                    return queryItem
+                })
+
+                let previewURL = try! previewURLComponents.asURL()
                 previewController = PreviewWebKitViewController(post: self.post, previewURL: previewURL)
             } else {
                 if self.post.permaLink == nil {
