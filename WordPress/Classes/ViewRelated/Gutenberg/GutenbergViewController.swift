@@ -282,10 +282,8 @@ class GutenbergViewController: UIViewController, PostEditor {
         }
     }
     private var isFirstGutenbergLayout = true
-    var shouldPresentInformativeDialog = false
-    lazy var shouldPresentPhase2informativeDialog: Bool = {
-        return gutenbergSettings.shouldPresentInformativeDialog(for: post.blog)
-    }()
+    let shouldPresentInformativeDialog = false
+    let shouldPresentPhase2informativeDialog = false
 
     private var themeSupportQuery: Receipt? = nil
     private var themeSupportReceipt: Receipt? = nil
