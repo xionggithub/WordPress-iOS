@@ -282,10 +282,6 @@ class GutenbergViewController: UIViewController, PostEditor {
         }
     }
     private var isFirstGutenbergLayout = true
-    var shouldPresentInformativeDialog = false
-    lazy var shouldPresentPhase2informativeDialog: Bool = {
-        return gutenbergSettings.shouldPresentInformativeDialog(for: post.blog)
-    }()
 
     private var themeSupportQuery: Receipt? = nil
     private var themeSupportReceipt: Receipt? = nil
@@ -337,7 +333,6 @@ class GutenbergViewController: UIViewController, PostEditor {
         refreshInterface()
 
         gutenberg.delegate = self
-        showInformativeDialogIfNecessary()
         fetchEditorTheme()
         presentNewPageNoticeIfNeeded()
 
@@ -458,7 +453,7 @@ class GutenbergViewController: UIViewController, PostEditor {
     }
 
     func focusTitleIfNeeded() {
-        guard !post.hasContent(), shouldPresentInformativeDialog == false, shouldPresentPhase2informativeDialog == false else {
+        guard !post.hasContent() else {
             return
         }
         gutenberg.setFocusOnTitle()

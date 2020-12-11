@@ -175,7 +175,6 @@ class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
         if #available(iOS 13, *) {
             checkAppleIDCredentialState()
         }
-        GutenbergSettings().performGutenbergPhase2MigrationIfNeeded()
     }
 
     func application(_ application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
